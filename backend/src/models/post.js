@@ -5,7 +5,7 @@ const { userSchema } = require('./user');
 const postSchema = new mongoose.Schema({
     comment: {
         type: [textSchema],
-        required: true
+        required: false
     },
     userId: {
         type: userSchema,

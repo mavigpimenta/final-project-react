@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
+const { postSchema } = require('./post');
 const { userSchema } = require('./user');
 
 const textSchema = new mongoose.Schema({
     comment: {
         type: String,
         minlength: 10,
-        required: false
+        required: true
+    },
+    postId: {
+        type: postSchema,
+        required: true
     },
     userId: {
         type: userSchema,
