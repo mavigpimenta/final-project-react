@@ -1,3 +1,5 @@
+import { Post } from "../models/post";
+
 class PostController {
     static createLog(error) {
         const timestamp = Date.now();
@@ -11,7 +13,14 @@ class PostController {
 
     static async getAll(req, res) {
         try {
-            const posts = await Post.find({ removedAt: null }).populate('author', 'name').exec();
+            const posts = await Post.find({ removedAt: null })
+                .populate('author', 'name') 
+                .populate({
+                    path: 'comment', 
+                    match: { removedAt: null }, 
+                    populate: { path: 'userId', select: 'name' } 
+                }).exec();
+
             return res.status(200).json(posts);
         } catch (error) {
             PostController.createLog(error);
@@ -27,13 +36,13 @@ class PostController {
 
         try {
             const id = req.user.id;
-            const author = await User.findById(id);
+            const userId = await User.findById(id);
 
             const post = {
+                comment: [],
+                userId,
                 title,
                 description,
-                author,
-                comments: [],
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
                 removedAt: null,
@@ -59,7 +68,7 @@ class PostController {
             if (!post) 
                 return res.status(404).send({ message: "Post not found" });
 
-            if (post.userId.toString() !== req.user.id) 
+            if (post.userId.id !== req.user.id) 
                 return res.status(403).send({ message: "You are not authorized to edit this comment." });
 
             post.title = title;

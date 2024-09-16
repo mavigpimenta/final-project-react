@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const bcrypt = require("bcryptjs");
+import { User } from '../models/user';
 
 class UserController {
     static async register(req, res) {
@@ -26,13 +27,13 @@ class UserController {
 
         const user = new User({
             name,
-            birth,
+            edv,
             password: passwordHash,
+            role,
+            birthDate,
             createdAt: Date.now(),
             updateAt: Date.now(),
             removedAt: null,
-            edv,
-            role
         });
 
         try {

@@ -1,6 +1,9 @@
+import { Comment } from "../models/comment";
+
 class CommentController {
     static async create(req, res) {
-        const { postId, description } = req.body;
+        const { description } = req.body;
+        const { postId } = req.params;
         
         if (!description || !postId) {
             return res.status(400).send({ message: "PostId and description are required." });
@@ -13,6 +16,9 @@ class CommentController {
                 postId,
                 userId,
                 description,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                removedAt: null,
             });
 
             await comment.save();
@@ -36,7 +42,7 @@ class CommentController {
             if (!comment) 
                 return res.status(404).send({ message: "Comment not found." });
 
-            if (comment.userId.toString() !== req.user.id) 
+            if (comment.userId.id !== req.user.id) 
                 return res.status(403).send({ message: "You are not authorized to edit this comment." });
 
             comment.description = description;
@@ -60,7 +66,8 @@ class CommentController {
                 return res.status(403).send({ message: "You are not authorized to delete this comment." });
             }
 
-            await comment.remove();
+            comment.removedAt = Date.now()
+            await comment.save();
             return res.status(200).send({ message: "Comment deleted successfully." });
         } catch (error) {
             console.error(error);
@@ -68,3 +75,5 @@ class CommentController {
         }
     }
 }
+
+module.exports = CommentController
