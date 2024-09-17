@@ -6,6 +6,7 @@ route
     .post('/create', PostController.create)
     .patch('/edit', PostController.edit)
     .get('/getAll', PostController.getAll)
+    .post('/getTitle', PostController.getByTitle)
     .delete('/delete', PostController.delete)
 
 module.exports = route;

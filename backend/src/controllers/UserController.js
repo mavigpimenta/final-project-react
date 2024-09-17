@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const bcrypt = require("bcryptjs");
-import { User } from '../models/user';
+const { User } = require('../models/user');
 
 class UserController {
     static async register(req, res) {

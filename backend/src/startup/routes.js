@@ -1,6 +1,11 @@
 const express = require("express");
-const route = require("../src/routes/route");
+const user = require("../routes/user");
+const post = require("../routes/post");
+const comment = require("../routes/comment");
 
 module.exports = function (app) {
-  app.use(express.json()).use("/api/route", route);
+  app.use(express.json())
+    .use("/post", post)
+    .use("/user", user)
+    .use("/comment", comment);
 };

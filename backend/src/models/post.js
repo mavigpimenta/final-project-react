@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const { textSchema } = require('./textSchema');
 const { userSchema } = require('./user');
+const { commentSchema } = require('./comment');
 
-const postSchema = new mongoose.Schema({
+const postSchema = mongoose.Schema({
     comment: {
-        type: [textSchema],
+        type: [commentSchema],
         required: false
     },
     userId: {

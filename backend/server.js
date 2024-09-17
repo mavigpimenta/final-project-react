@@ -3,14 +3,14 @@ const cors = require('cors');
 
 const app = express();
 
-require('./startup/db')();
+require('./src/startup/db')();
 
 app.use(cors({
     origin: '*'
 }));
 
-require('./startup/routes')(app);
+require('./src/startup/routes')(app);
 
-const port = 8080;
+const port = 8000;
 
 app.listen(port, () => console.log(`Acesse: http://localhost:${port}/`));

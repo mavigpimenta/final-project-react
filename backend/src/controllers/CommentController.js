@@ -1,4 +1,4 @@
-import { Comment } from "../models/comment";
+const { Comment } = require('../models/comment');
 
 class CommentController {
     static async create(req, res) {

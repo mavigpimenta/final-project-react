@@ -1,4 +1,4 @@
-import { Post } from "../models/post";
+const { Post } = require('../models/post');
 
 class PostController {
     static createLog(error) {
@@ -25,6 +25,31 @@ class PostController {
         } catch (error) {
             PostController.createLog(error);
             return res.status(500).send({ message: "Failed to retrieve posts", data: error.message });
+        }
+    }
+
+    static async getByTitle(req, res) {
+        const { title } = req.body;
+
+        if (!title)
+            return res.status(400).send({ message: "Title query parameter is required" });
+
+        try {
+            const posts = await Post.find({ 
+                title: `${/title/}`,
+                removedAt: null
+            })
+            .populate('author', 'name')
+            .populate({
+                path: 'comment', 
+                match: { removedAt: null }, 
+                populate: { path: 'userId', select: 'name' }
+            }).exec();
+
+            return res.status(200).json(posts);
+        } catch (error) {
+            PostController.createLog(error);
+            return res.status(500).send({ message: "Failed to search posts", data: error.message });
         }
     }
 
