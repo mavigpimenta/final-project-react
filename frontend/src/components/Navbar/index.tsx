@@ -1,5 +1,5 @@
 import { Background, Image } from "./styled.module";
-import Logo from "/BoschLogo.png";
+import Logo from "/Logo.png";
 
 const Navbar = () => {
     return (

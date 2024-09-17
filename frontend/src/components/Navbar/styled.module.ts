@@ -9,7 +9,7 @@ export const Background = styled.div`
 
     &::after {
         content: "";
-        background-image: url("/boschcolor.svg");
+        background-image: url("/ColorBar.svg");
         background-repeat: no-repeat;
         background-size: 100%;
         position: fixed;
