@@ -1,6 +1,11 @@
+import { Background, Image } from "./styled.module";
+import Logo from "/BoschLogo.png";
+
 const Navbar = () => {
     return (
-        <div></div>
+        <Background>
+            <Image src={Logo} />
+        </Background>
     )
 }
 
