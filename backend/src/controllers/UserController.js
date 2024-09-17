@@ -100,6 +100,7 @@ class UserController {
         const newPasswordHash = await bcrypt.hash(newPassword, salt);
 
         userId.password = newPasswordHash;
+        console.log(newPasswordHash);
         userId.updatedAt = Date.now();
 
         try {
