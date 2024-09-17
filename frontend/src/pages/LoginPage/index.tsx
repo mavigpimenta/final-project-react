@@ -1,6 +1,11 @@
+import PageEnveloper from "../../components/PageEnveloper";
+import Button from "../../components/Button";
+
 const LoginPage = () => {
     return (
-        <div></div>
+        <PageEnveloper>
+            <Button>Enter</Button>
+        </PageEnveloper>
     )
 }
 
