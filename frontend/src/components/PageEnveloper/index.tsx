@@ -1,5 +1,4 @@
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 import { ScrollRestoration } from "react-router-dom";
 
 const PageEnveloper = ({ children }: { children: string }) => {
@@ -8,7 +7,6 @@ const PageEnveloper = ({ children }: { children: string }) => {
             <ScrollRestoration />
             <Navbar />
             {children}
-            <Footer />
         </>
     )
 }
