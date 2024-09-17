@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const { userSchema } = require('./user');
-const { commentSchema } = require('./comment');
 
 const postSchema = mongoose.Schema({
-    comment: {
-        type: [commentSchema],
-        required: false
+    comments: {
+        type: [mongoose.ObjectId],
+        required: true,
+        ref: 'Comment'
     },
     userId: {
         type: userSchema,

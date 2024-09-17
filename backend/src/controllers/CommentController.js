@@ -1,17 +1,20 @@
 const { Comment } = require('../models/comment');
+const { User } = require('../models/user');
+const { Post } = require('../models/post');
 
 class CommentController {
     static async create(req, res) {
         const { description } = req.body;
-        const { postId } = req.params;
+        const { postId } = req.query;
         
         if (!description || !postId) {
             return res.status(400).send({ message: "PostId and description are required." });
         }
 
         try {
-            const id = req.user.id;
-            const userId = User.findById(id);  
+            const id = req.user?.id; 
+            const userId = await User.findById(id);
+            console.log('User ID from token:', userId); 
             const comment = new Comment({
                 postId,
                 userId,
@@ -21,7 +24,12 @@ class CommentController {
                 removedAt: null,
             });
 
+            const postComment = await Post.findById(postId);
+            postComment.comments.push(comment);
+
+            await postComment.save();
             await comment.save();
+            
             return res.status(201).send({ message: "Comment created successfully." });
         } catch (error) {
             console.error(error);
@@ -30,7 +38,7 @@ class CommentController {
     }
 
     static async edit(req, res) {
-        const { commentId } = req.params; 
+        const { commentId } = req.query; 
         const { description } = req.body;
 
         if (!description) {

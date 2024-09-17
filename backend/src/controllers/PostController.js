@@ -1,70 +1,88 @@
 const { Post } = require('../models/post');
+const { User } = require('../models/user')
 
 class PostController {
-    static createLog(error) {
-        const timestamp = Date.now();
-        const archivePath = path.resolve(__dirname, '..', `logs-${timestamp}.txt`);
-        const errorString = JSON.stringify(error.message);
-
-        fs.writeFile(archivePath, errorString, function (err, result) {
-            if (err) console.log(err);
-        });
-    }
-
     static async getAll(req, res) {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit; 
+    
         try {
             const posts = await Post.find({ removedAt: null })
-                .populate('author', 'name') 
+                .skip(skip)
+                .limit(limit)
+                .populate('userId', 'name')
                 .populate({
-                    path: 'comment', 
-                    match: { removedAt: null }, 
-                    populate: { path: 'userId', select: 'name' } 
-                }).exec();
-
-            return res.status(200).json(posts);
+                    path: 'comment',
+                    match: { removedAt: null },
+                    populate: { path: 'userId', select: 'name' }
+                })
+                .exec();
+    
+            const totalPosts = await Post.countDocuments({ removedAt: null }); 
+    
+            return res.status(200).json({
+                currentPage: page,
+                totalPages: Math.ceil(totalPosts / limit),
+                totalPosts,
+                posts
+            });
         } catch (error) {
-            PostController.createLog(error);
             return res.status(500).send({ message: "Failed to retrieve posts", data: error.message });
         }
     }
-
+    
     static async getByTitle(req, res) {
-        const { title } = req.body;
-
+        const { title } = req.query; 
+    
         if (!title)
             return res.status(400).send({ message: "Title query parameter is required" });
-
+    
+        const page = parseInt(req.query.page) || 1; 
+        const limit = parseInt(req.query.limit) || 10; 
+        const skip = (page - 1) * limit; 
+    
         try {
             const posts = await Post.find({ 
-                title: `${/title/}`,
+                title: new RegExp(title, 'i'), 
                 removedAt: null
             })
-            .populate('author', 'name')
-            .populate({
-                path: 'comment', 
-                match: { removedAt: null }, 
-                populate: { path: 'userId', select: 'name' }
-            }).exec();
-
-            return res.status(200).json(posts);
+            .skip(skip)
+            .limit(limit)
+            .populate('userId', 'name')
+            .populate('comments')
+            .exec();
+    
+            const totalPosts = await Post.countDocuments({ 
+                title: new RegExp(title, 'i'), 
+                removedAt: null 
+            }); 
+    
+            return res.status(200).json({
+                currentPage: page,
+                totalPages: Math.ceil(totalPosts / limit),
+                totalPosts,
+                posts
+            });
         } catch (error) {
-            PostController.createLog(error);
             return res.status(500).send({ message: "Failed to search posts", data: error.message });
         }
     }
+    
 
     static async create(req, res) {
-        const { title, text } = req.body;
+        const { title, description } = req.body;
 
-        if (!title || !text)
+        if (!title || !description)
             return res.status(400).send({ message: "There is incomplete information" });
 
         try {
-            const id = req.user.id;
+            const id = req.user?.id;
             const userId = await User.findById(id);
+            console.log('User ID from token:', userId);
 
             const post = {
-                comment: [],
+                comments: [],
                 userId,
                 title,
                 description,
@@ -76,7 +94,6 @@ class PostController {
             await Post.create(post);
             return res.status(201).send({ message: "Created post wit sucessfully" });
         } catch (error) {
-            PostController.createLog(error);
             return res.status(500).send({ error: "Something wrong", data: error.message });
         }
     }
@@ -103,7 +120,6 @@ class PostController {
             await post.save();
             return res.status(200).send({ message: "Updated post with sucessfully." });
         } catch (error) {
-            PostController.createLog(error);
             return res.status(500).send({ error: "Something wrong", data: error.message });
         }
     }
@@ -123,7 +139,6 @@ class PostController {
 
             return res.status(200).send({ message: "Deleted post with sucessfully" });
         } catch (error) {
-            PostController.createLog(error);
             return res.status(500).send({ error: "Something wrong", data: error.message });
         }
     }

@@ -5,10 +5,10 @@ const { User } = require('../models/user');
 
 class UserController {
     static async register(req, res) {
-        const { name, birth, edv, password, confirmPassword, role } = req.body;
+        const { name, birthDate, edv, password, confirmPassword, role } = req.body;
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-        if (!name || !role || !edv || !password || !birth)
+        if (!name || !role || !edv || !password || !birthDate)
             return res.status(400).json({ message: "Missing information." });
     
         const userExist = await User.findOne({ edv: edv });
@@ -32,7 +32,7 @@ class UserController {
             role,
             birthDate,
             createdAt: Date.now(),
-            updateAt: Date.now(),
+            updatedAt: Date.now(),
             removedAt: null,
         });
 
@@ -71,19 +71,21 @@ class UserController {
     }
 
     static async updatePassword(req, res) {
-        const { edv, oldPassword, newPassword, confirmPassword } = req.body;
+        const { oldPassword, newPassword, confirmPassword } = req.body;
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const id = req.user?.id; 
+        const userId = await User.findById(id);
+        console.log('User ID from token:', userId);
 
-        if (!edv || !oldPassword || !newPassword || !confirmPassword) {
+        if (!oldPassword || !newPassword || !confirmPassword) {
             return res.status(400).json({ message: "Missing information." });
         }
 
-        const user = await User.findOne({ edv });
-        if (!user) {
+        if (!userId) {
             return res.status(400).json({ message: "User not found." });
         }
 
-        const validPassword = await bcrypt.compare(oldPassword, user.password);
+        const validPassword = await bcrypt.compare(oldPassword, userId.password);
 
         if (!validPassword) 
             return res.status(400).json({ message: "Old password is incorrect." });
@@ -97,11 +99,11 @@ class UserController {
         const salt = await bcrypt.genSalt(12);
         const newPasswordHash = await bcrypt.hash(newPassword, salt);
 
-        user.password = newPasswordHash;
-        user.updateAt = Date.now();
+        userId.password = newPasswordHash;
+        userId.updatedAt = Date.now();
 
         try {
-            await user.save();
+            await userId.save();
             res.status(200).send({ message: "Password updated successfully." });
         } catch (error) {
             return res.status(500).send({ message: "Something went wrong.", data: error.message });

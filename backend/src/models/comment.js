@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 const { userSchema } = require('./user');
-const { postSchema } = require('./post');
 
 const commentSchema = new mongoose.Schema({
-    posts: {
-        type: postSchema,
+    postId: {
+        type: mongoose.ObjectId,
         required: true
     },
     userId: {
         type: userSchema,
         required: true
-    },
+    }, 
     description: {
         type: String,
         minlength: 6,
