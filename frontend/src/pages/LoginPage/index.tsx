@@ -1,9 +1,10 @@
 import PageEnveloper from "../../components/PageEnveloper";
+import Button from "../../components/Button";
 
 const LoginPage = () => {
     return (
         <PageEnveloper>
-            teste
+            <Button>Enter</Button>
         </PageEnveloper>
     )
 }

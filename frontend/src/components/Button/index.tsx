@@ -1,6 +1,8 @@
-const Button = () => {
+import { StyledButton } from "./styled.module";
+
+const Button = ({ children }: { children: string }) => {
     return (
-        <div></div>
+        <StyledButton>{children}</StyledButton>
     )
 }
 
