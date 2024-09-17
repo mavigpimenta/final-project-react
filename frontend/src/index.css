@@ -1,11 +1,20 @@
+@font-face {
+  font-family: 'BoschSans';
+  src: url('../public/Font/boschsans-complete/boschsans-v5_003/fonts-woff2/BoschSans-Regular-v5_003.woff2') format('woff2'),
+    url('../public/Font/boschsans-complete/boschsans-v5_003/fonts-woff/BoschSans-Regular-v5_003.woff') format('woff'), ;
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
+  font-family: 'BoschSans';
 }
+
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   background-color: #f0f2f5;
 }
 

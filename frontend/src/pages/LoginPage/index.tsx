@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 const LoginPage = () => {
     return (
         <PageEnveloper>
-            <Button>Enter</Button>
+            <Button>Butao</Button>
         </PageEnveloper>
     )
 }
