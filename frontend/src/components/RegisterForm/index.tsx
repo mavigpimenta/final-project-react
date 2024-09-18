@@ -1,5 +1,6 @@
 import Button from "../Button";
 import { Input } from "../Input";
+import { Select } from "../Select";
 import { FormWrapper } from "./styled.module";
 
 interface RegisterFormProps {
@@ -10,13 +11,15 @@ interface RegisterFormProps {
   setName: (value: string) => void;
   date: string;
   setDate: (value: string) => void;
+  role: string;
+  setRole: (value: string) => void;
   password: string;
   setPassword: (value: string) => void;
   confirmPassword: string;
   setConfirmPassword: (value: string) => void;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, edv, setEdv, name, setName, date, setDate, password, setPassword, confirmPassword, setConfirmPassword }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, edv, setEdv, name, setName, date, setDate, role, setRole, password, setPassword, confirmPassword, setConfirmPassword }) => {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputDate = e.target.value;
     const [day, month, year] = inputDate.split('/');
@@ -38,6 +41,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, edv, setEd
       <Input label="EDV" type="text" value={edv} onChange={(e) => setEdv(e.target.value)} />
       <Input label="Nome completo" type="text" value={name} onChange={(e) => setName(e.target.value)} />
       <Input label="Data de nascimento" type="date" placeholder="DD/MM/YYYY" value={date} onChange={handleDateChange} />
+      <Select label="Função" value={role} onChange={(e) => setRole(e.target.value)} />
       <Input label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <Input label="Confirmar Senha" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       <Button>Entrar</Button>

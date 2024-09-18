@@ -9,6 +9,7 @@ const RegisterPage = () => {
     const [edv, setEdv] = useState('');
     const [name, setName] = useState('');
     const [date, setDate] = useState('');
+    const [role, setRole] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -24,7 +25,7 @@ const RegisterPage = () => {
 
                 <ContentWrapper>
                     <Logo src={LogoImage} alt="Logo" />
-                    <RegisterForm edv={edv} setEdv={setEdv} name={name} setName={setName} date={date} setDate={setDate} password={password} setPassword={setPassword} confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} onSubmit={handleSubmit} />
+                    <RegisterForm edv={edv} setEdv={setEdv} name={name} setName={setName} date={date} setDate={setDate} role={role} setRole={setRole} password={password} setPassword={setPassword} confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} onSubmit={handleSubmit} />
                 </ContentWrapper>
             </PageWrapper>
         </PageEnveloper>

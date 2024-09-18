@@ -5,7 +5,7 @@ export const PageWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100vw;
-  height: 88vh;
+  height: 80vh;
 `;
 
 export const ContentWrapper = styled.div`
