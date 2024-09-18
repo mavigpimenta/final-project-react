@@ -17,12 +17,14 @@ export const InputWrapper = styled.div`
 export const StyledInput = styled.input`
   padding: 0.75rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: none; 
+  border-bottom: 1px solid #ccc; 
   outline: none;
+  width: 100%; 
+  box-sizing: border-box; 
 
   &:focus {
-    border-color: #007bc0;
+    border-bottom-color: #007bc0; 
   }
 
   @media (max-width: 768px) {
@@ -34,4 +36,4 @@ export const StyledInput = styled.input`
     padding: 0.5rem;
     font-size: 0.9rem;
   }
-`
+`;
