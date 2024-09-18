@@ -3,6 +3,7 @@ import { LoginForm } from "../../components/LoginForm";
 import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
 import LogoImage from '/Logo.png'
 import axios from "axios";
+import { StyledSelect } from "../../components/Select/styled.module";
 
 export const LoginPage = () => {
     const [edv, setEdv] = useState('');
