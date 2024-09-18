@@ -7,7 +7,10 @@ import Worker from "/Worker.svg";
 
 const RegisterPage = () => {
     const [edv, setEdv] = useState('');
+    const [name, setName] = useState('');
+    const [date, setDate] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -21,7 +24,7 @@ const RegisterPage = () => {
 
                 <ContentWrapper>
                     <Logo src={LogoImage} alt="Logo" />
-                    <RegisterForm edv={edv} setEdv={setEdv} password={password} setPassword={setPassword} onSubmit={handleSubmit} />
+                    <RegisterForm edv={edv} setEdv={setEdv} name={name} setName={setName} date={date} setDate={setDate} password={password} setPassword={setPassword} confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} onSubmit={handleSubmit} />
                 </ContentWrapper>
             </PageWrapper>
         </PageEnveloper>
