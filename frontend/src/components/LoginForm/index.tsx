@@ -1,5 +1,6 @@
 import Button from "../Button";
 import { Input } from "../Input";
+import { StyledOption, StyledSelect } from "../Select/styled.module";
 import { FormWrapper } from "./styled.module";
 
 interface LoginFormProps {
