@@ -19,4 +19,4 @@ export const FormWrapper = styled.form`
   @media (max-width: 480px) {
     padding: 1rem;
   }
-`;;
+`
