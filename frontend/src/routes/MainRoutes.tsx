@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import RegisterPage from "../pages/RegisterPage";
+import EditProfilePage from "../pages/EditProfilePage";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <RegisterPage />,
+    element: <EditProfilePage />,
   }
 ]);
