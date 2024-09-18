@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'BoschSans';
-  src: url('../public/Font/boschsans-complete/boschsans-v5_003/fonts-woff2/BoschSans-Regular-v5_003.woff2') format('woff2'),
-    url('../public/Font/boschsans-complete/boschsans-v5_003/fonts-woff/BoschSans-Regular-v5_003.woff') format('woff'), ;
+  src: url('/Font/boschsans-complete/boschsans-v5_003/fonts-woff2/BoschSans-Regular-v5_003.woff2') format('woff2'),
+    url('/Font/boschsans-complete/boschsans-v5_003/fonts-woff/BoschSans-Regular-v5_003.woff') format('woff'), ;
   font-weight: normal;
   font-style: normal;
 }
