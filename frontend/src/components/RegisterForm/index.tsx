@@ -2,6 +2,7 @@ import Button from "../Button";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import { FormWrapper } from "./styled.module";
+import { Date } from "../Date"
 
 interface RegisterFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -9,8 +10,8 @@ interface RegisterFormProps {
   setEdv: (value: string) => void;
   name: string;
   setName: (value: string) => void;
-  date: string;
-  setDate: (value: string) => void;
+  date: Date | null;
+  setDate: (value: Date | null) => void;
   role: string;
   setRole: (value: string) => void;
   password: string;
@@ -20,27 +21,11 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, edv, setEdv, name, setName, date, setDate, role, setRole, password, setPassword, confirmPassword, setConfirmPassword }) => {
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputDate = e.target.value;
-    const [day, month, year] = inputDate.split('/');
-
-    if (day && month && year) {
-      const parsedDate = new Date(+year, +month - 1, +day);
-      if (!isNaN(parsedDate.getTime()) && parsedDate.getDate() === +day) {
-        setDate(inputDate);
-      } else {
-        setDate('');
-      }
-    } else {
-      setDate('');
-    }
-  };
-
   return (
     <FormWrapper onSubmit={onSubmit}>
       <Input label="EDV" type="text" value={edv} onChange={(e) => setEdv(e.target.value)} />
       <Input label="Nome completo" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      <Input label="Data de nascimento" type="date" placeholder="DD/MM/YYYY" value={date} onChange={handleDateChange} />
+      <Date selected={date} onChange={(date) => setDate(date)} placeholder="DD/MM/YYYY" />
       <Select label="Função" value={role} onChange={(e) => setRole(e.target.value)} />
       <Input label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <Input label="Confirmar Senha" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />

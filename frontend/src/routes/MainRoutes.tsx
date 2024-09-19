@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { LoginPage } from "../pages/LoginPage";
 import EditProfilePage from "../pages/EditProfilePage";
 import RegisterPage from "../pages/RegisterPage";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const routes = createBrowserRouter([
   {

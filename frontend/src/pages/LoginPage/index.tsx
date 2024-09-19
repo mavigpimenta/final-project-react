@@ -24,8 +24,7 @@ export const LoginPage = () => {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       localStorage.setItem('role', decodedToken.role);
 
-      console.log('Login successful:', response.data);
-
+      
     } catch (error) {
       console.log('An unexpected error occurred. Please try again later.');
     }
