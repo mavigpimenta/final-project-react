@@ -1,9 +1,14 @@
 import { StyledButton } from "./styled.module";
 
-const Button = ({ children }: { children: string }) => {
+interface ButtonProps {
+    children: string;
+    onClick?: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
     return (
-        <StyledButton>{children}</StyledButton>
-    )
+        <StyledButton onClick={onClick}>{children}</StyledButton>
+    );
 }
 
 export default Button;
