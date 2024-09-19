@@ -15,6 +15,7 @@ class PostController {
                 .populate({
                     path: 'comment',
                     match: { removedAt: null },
+                    options: { limit: 2 }, 
                     populate: { path: 'userId', select: 'name' }
                 })
                 .exec();
@@ -50,7 +51,12 @@ class PostController {
             .skip(skip)
             .limit(limit)
             .populate('userId', 'name')
-            .populate('comments')
+            .populate({
+                path: 'comment',
+                match: { removedAt: null },
+                options: { limit: 2 }, 
+                populate: { path: 'userId', select: 'name' }
+            })
             .exec();
     
             const totalPosts = await Post.countDocuments({ 
@@ -69,7 +75,32 @@ class PostController {
         }
     }
     
-
+    static async getById(req, res) {
+        const { id } = req.params; 
+    
+        if (!id)
+            return res.status(400).send({ message: "Post ID is required" });
+    
+        try {
+            const post = await Post.findById(id)
+                .populate('userId', 'name')
+                .populate({
+                    path: 'comment',
+                    match: { removedAt: null },
+                    populate: { path: 'userId', select: 'name' }
+                })
+                .exec();
+    
+            if (!post) {
+                return res.status(404).send({ message: "Post not found" });
+            }
+    
+            return res.status(200).json(post);
+        } catch (error) {
+            return res.status(500).send({ message: "Failed to retrieve post", data: error.message });
+        }
+    }
+    
     static async create(req, res) {
         const { title, description } = req.body;
 
