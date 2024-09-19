@@ -7,10 +7,6 @@ import Worker from "/FemaleWorker.svg";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
-interface ErrorResponse {
-    message: string; 
-}
-
 const EditProfilePage = () => {
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
