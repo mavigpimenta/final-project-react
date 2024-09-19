@@ -1,9 +1,12 @@
 import PageEnveloper from "../../components/PageEnveloper"
+import { PageWrapper } from "./styled.module";
 
 const MainPage = () => {
     return (
         <PageEnveloper>
-            teste
+            <PageWrapper>
+                teste
+            </PageWrapper>
         </PageEnveloper>
     )
 }

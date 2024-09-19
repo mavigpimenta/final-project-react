@@ -11,7 +11,7 @@ const Navbar = () => {
     });
 
     useEffect(() => {
-        document.documentElement.classList.toggle("dark")
+        document.documentElement.classList.toggle('dark', isDarkMode);
         localStorage.setItem('dark-mode', JSON.stringify(isDarkMode));
     }, [isDarkMode]);
 
