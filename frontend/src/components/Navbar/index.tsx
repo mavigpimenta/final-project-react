@@ -1,6 +1,5 @@
 import { NavbarContainer, Image, DarkModeButton, NavbarContent, DarkModeImage } from "./styled.module";
 import { useEffect, useState } from "react";
-import LogoImage from "/Logo.svg";
 import Sun from "/Sun.svg"
 import Moon from "/Moon.svg"
 

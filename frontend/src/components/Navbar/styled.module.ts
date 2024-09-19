@@ -4,7 +4,8 @@ export const NavbarContainer = styled.div`
     height: 12vh;
     display: flex;
     align-items: center;
-
+    background-color: var(--bg-color);
+    
     &::after {
         content: "";
         background-image: url("/ColorBar.svg");
@@ -16,29 +17,30 @@ export const NavbarContainer = styled.div`
         width: 100vw;
         height: 8px;
     }
-`
+`;
 
 export const NavbarContent = styled.div`
     width: 100vw;
     display: flex;
-    justify-content: space-between
-`
+    justify-content: space-between;
+    align-items: center;
+`;
 
 export const Image = styled.div`
     width: 200px;
     height: 50px;
     padding-left: 25px;
-`
+`;
 
 export const DarkModeButton = styled.button`
     background-color: var(--bg-color);
     border-style: none;
     display: flex;
     cursor: pointer;
-`
+`;
 
 export const DarkModeImage = styled.img`
     width: 35px;
     height: 35px;
-    padding-right: 25px;
-`
+    padding-right: 35px;
+`;

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
 import { EditForm } from "../../components/EditForm";
 import PageEnveloper from "../../components/PageEnveloper";
-import LogoImage from '/Logo.svg'
 import Worker from "/FemaleWorker.svg";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
