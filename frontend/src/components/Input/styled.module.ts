@@ -21,8 +21,8 @@ export const StyledInput = styled.input`
   border-bottom: 1px solid #ccc; 
   outline: none;
   width: 100%; 
-  background: transparent;
-  box-sizing: border-box; 
+  box-sizing: border-box;
+  background-color: transparent;
 
   &:focus {
     border-bottom-color: #007bc0; 

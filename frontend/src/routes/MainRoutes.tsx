@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { LoginPage } from "../pages/LoginPage";
 import EditProfilePage from "../pages/EditProfilePage";
 import RegisterPage from "../pages/RegisterPage";
+import MainPage from "../pages/MainPage";
 import 'react-toastify/dist/ReactToastify.css';
 
 export const routes = createBrowserRouter([
@@ -16,5 +17,9 @@ export const routes = createBrowserRouter([
   {
     path: "/updatePass",
     element: <EditProfilePage />,
+  },
+  {
+    path: "/home",
+    element: <MainPage />,
   }
 ]);
