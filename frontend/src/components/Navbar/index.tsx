@@ -24,7 +24,7 @@ const Navbar = () => {
             <NavbarContent>
                 <Image src={LogoImage} />
                 <DarkModeButton onClick={toggleDarkMode}>
-                    <DarkModeImage src={isDarkMode ? Moon : Sun} />
+                    <DarkModeImage src={isDarkMode ? Moon : Sun} style={{ filter: isDarkMode ? 'invert(80%) sepia(20%) hue-rotate(190deg)' : 'none' }}/>
                 </DarkModeButton>
             </NavbarContent>
         </NavbarContainer>
