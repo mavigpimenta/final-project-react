@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LoginForm } from "../../components/LoginForm";
 import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
-import LogoImage from '/Logo.png'
+import LogoImage from '/Logo.svg'
 import axios from "axios";
 
 export const LoginPage = () => {

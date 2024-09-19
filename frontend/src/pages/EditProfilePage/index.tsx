@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
-import PageEnveloper from "../../components/PageEnveloper";
-import LogoImage from '/Logo.png'
-import Worker from "/FemaleWorker.svg";
 import { EditForm } from "../../components/EditForm";
+import PageEnveloper from "../../components/PageEnveloper";
+import LogoImage from '/Logo.svg'
+import Worker from "/FemaleWorker.svg";
 
 const EditProfilePage = () => {
     const [oldPassword, setOldPassword] = useState('');

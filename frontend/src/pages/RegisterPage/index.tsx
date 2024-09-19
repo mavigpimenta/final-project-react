@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RegisterForm } from "../../components/RegisterForm";
 import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
 import PageEnveloper from "../../components/PageEnveloper";
-import LogoImage from '/Logo.png'
+import LogoImage from '/Logo.svg'
 import Worker from "/Worker.svg";
 
 const RegisterPage = () => {
