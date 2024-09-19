@@ -26,7 +26,7 @@ export const NavbarContent = styled.div`
     justify-content: space-between
 `
 
-export const Image = styled.img`
+export const Image = styled.div`
     width: 200px;
     height: 50px;
     padding-left: 25px;

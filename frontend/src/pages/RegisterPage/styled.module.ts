@@ -15,7 +15,7 @@ export const ContentWrapper = styled.div`
   padding: 2rem;
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.div`
   width: 150px;
   padding: 10px;
 `;

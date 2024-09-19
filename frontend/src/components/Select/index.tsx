@@ -9,7 +9,7 @@ interface SelectProps {
 
 export const Select: React.FC<SelectProps> = ({ label, value, onChange }) => {
   return (
-    <>
+    <> 
       <label>{label}</label>
       
       <StyledSelect value={value} onChange={onChange}>
