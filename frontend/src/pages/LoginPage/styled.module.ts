@@ -23,7 +23,7 @@ export const ContentWrapper = styled.div`
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.div`
   width: 150px;
   padding: 10px;
 `;
