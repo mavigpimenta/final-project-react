@@ -5,5 +5,10 @@ export const PageWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100vw;
-  height: 89vh;
+  min-height: 88vh;
 `;
+
+export const Teste = styled.div`
+    display: flex;
+    flex-direction: column;
+`
