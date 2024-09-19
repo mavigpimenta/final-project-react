@@ -30,6 +30,10 @@ export const StyledDatePicker = styled(DatePicker)`
     border-bottom-color: #007bc0; 
   }
 
+  &::placeholder {
+    color: var(--text-color);
+  }
+
   @media (max-width: 768px) {
     padding: 0.65rem;
     font-size: 0.95rem;
