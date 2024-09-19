@@ -25,6 +25,7 @@ export const StyledDatePicker = styled(DatePicker)`
   width: 100%; 
   box-sizing: border-box;
   background-color: transparent;
+  color: var(--text-color);
 
   &:focus {
     border-bottom-color: #007bc0; 

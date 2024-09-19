@@ -9,10 +9,15 @@
 :root {
   --text-color: #000000;
   --bg-color: #FFFFFF;
+  --bosch-logo: black;
+  --bosch-text: red;
 }
+
 .dark:root {
   --text-color: #FFFFFF;
   --bg-color: #232628;
+  --bosch-logo: white;
+  --bosch-text: white;
 }
 
 * {
