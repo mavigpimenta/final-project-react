@@ -33,7 +33,7 @@ export const Image = styled.img`
 `
 
 export const DarkModeButton = styled.button`
-    background-color: #FFFFFF;
+    background-color: var(--bg-color);
     border-style: none;
     display: flex;
     cursor: pointer;

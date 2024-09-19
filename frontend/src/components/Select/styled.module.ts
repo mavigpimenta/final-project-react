@@ -8,8 +8,9 @@ export const StyledSelect = styled.select`
   outline: none;
   width: 100%;
   box-sizing: border-box;
-  background: transparent; 
-  appearance: none; 
+  background: transparent;
+  appearance: none;
+  color: var(--text-color);
 
   &:focus {
     border-bottom-color: #007bc0; 
@@ -30,7 +31,7 @@ export const StyledOption = styled.option`
   padding: 0.5rem;
   font-size: 1rem;
   background: #fff; 
-  color: #333; 
+  color: #333;
   border-bottom: 1px solid #eee;
   
   &:nth-child(even) {

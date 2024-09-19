@@ -6,15 +6,24 @@
   font-style: normal;
 }
 
+:root {
+  --text-color: #000000;
+  --bg-color: #FFFFFF;
+}
+.dark:root {
+  --text-color: #FFFFFF;
+  --bg-color: #232628;
+}
+
 * {
   margin: 0;
   padding: 0;
-  font-family: 'BoschSans';
 }
 
-
 body {
-  margin: 0;
+  font-family: 'BoschSans';
+  color: var(--text-color);
+  background-color: var(--bg-color);
 }
 
 html {
