@@ -3,6 +3,8 @@ import { Select } from "../Select";
 import { FormWrapper } from "./styled.module";
 import { Date } from "../Date"
 import { Input } from "../Input";
+import { useState } from "react";
+import { ModalNewPost } from "../ModalNewPost";
 
 interface RegisterFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
