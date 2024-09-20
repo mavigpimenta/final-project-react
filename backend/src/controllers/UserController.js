@@ -21,12 +21,13 @@ class UserController {
     
         if(userExist)
             return res.status(409).json({ message: "This EDV is already registered." });
-        
+
+        const normalizedName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const salt = await bcrypt.genSalt(12);
         const passwordHash = await bcrypt.hash(password, salt);
 
         const user = new User({
-            name,
+            name: normalizedName,
             edv,
             password: passwordHash,
             role,

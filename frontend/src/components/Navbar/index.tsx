@@ -23,7 +23,7 @@ const Navbar = () => {
     useEffect(() => {
         setBgColor(getRandomColor());
         const storedUserName = localStorage.getItem('name') || "Usuário";
-        setUserName(storedUserName);
+        setUserName(formatUserName(storedUserName));
         setUserInitial(storedUserName.charAt(0).toUpperCase());
     }, []);
 
@@ -54,6 +54,13 @@ const Navbar = () => {
         }
         return color;
     }
+
+    const formatUserName = (name) => {
+        const namesArray = name.split(" ");
+        const firstName = namesArray[0];
+        const lastName = namesArray[namesArray.length - 1];
+        return `${firstName} ${lastName}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    };
 
     return (
         <NavbarContainer>
