@@ -1,60 +1,13 @@
 import PageEnveloper from "../../components/PageEnveloper"
-import { PageWrapper, Teste } from "./styled.module";
+import QuestionCard from "../../components/QuestionCard";
+import { PageWrapper } from "./styled.module";
 
 const MainPage = () => {
     return (
         <PageEnveloper>
             <PageWrapper>
-                <Teste>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                    <ul>TESTE</ul>
-                </Teste>
+                <QuestionCard>
+                </QuestionCard>
             </PageWrapper>
         </PageEnveloper>
     )
