@@ -4,10 +4,8 @@ export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  background-color: #fff;
   max-width: 500px;
   width: 100%;
-  z-index: 999;
   gap: 20px;
 
   @media (max-width: 768px) {

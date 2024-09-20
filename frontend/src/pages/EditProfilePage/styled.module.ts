@@ -12,8 +12,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fff;
-  padding: 1rem;
+  padding: 2rem;
   max-width: 800px;
   width: 80%;
   
