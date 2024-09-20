@@ -24,6 +24,8 @@ export const LoginPage = () => {
 
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       localStorage.setItem('role', decodedToken.role);
+      localStorage.setItem('name', decodedToken.name);
+
       navigate('/updatePass')
     } catch (error) {
       console.log('An unexpected error occurred. Please try again later.');
