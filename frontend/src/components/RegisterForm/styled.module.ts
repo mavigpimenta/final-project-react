@@ -11,7 +11,7 @@ export const FormWrapper = styled.form`
   
   @media (max-width: 768px) {
     padding: 1.5rem;
-    max-width: 100%;
+    max-width: 80%;
     box-shadow: none;
   }
 

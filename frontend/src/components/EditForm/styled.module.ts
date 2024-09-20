@@ -4,6 +4,7 @@ export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   padding: 2rem;
+  background-color: #fff;
   max-width: 500px;
   width: 100%;
   z-index: 999;
@@ -17,5 +18,6 @@ export const FormWrapper = styled.form`
 
   @media (max-width: 480px) {
     padding: 1rem;
+    gap: 15px;
   }
-`
+`;

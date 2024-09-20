@@ -28,6 +28,10 @@ export const NavbarContainer = styled.div`
     width: 100%;
     height: 8px;
   }
+
+  @media (min-width: 1024px) {
+    margin-bottom: 40px;
+  }
 `;
 
 export const NavbarContent = styled.div`
@@ -36,6 +40,10 @@ export const NavbarContent = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 25px; 
+
+  @media (min-width: 320px) {
+    padding: 0;
+  }
 `;
 
 export const Image = styled.div`
@@ -43,6 +51,10 @@ export const Image = styled.div`
   padding-left: 25px;
   display: flex;
   align-items: center; 
+
+  @media (min-width: 320px) {
+    width: 40%
+  }
 `;
 
 export const DarkModeButton = styled.button`
