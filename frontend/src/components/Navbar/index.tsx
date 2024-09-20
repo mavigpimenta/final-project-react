@@ -1,9 +1,15 @@
-import { NavbarContainer, Image, DarkModeButton, NavbarContent, DarkModeImage } from "./styled.module";
+import { NavbarContainer, Image, DarkModeButton, NavbarContent, DarkModeImage, UserIconContainer, UserIcon, DropdownMenu, DropdownItem, IconsContainer } from "./styled.module";
 import { useEffect, useState } from "react";
 import Sun from "/Sun.svg"
 import Moon from "/Moon.svg"
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [bgColor, setBgColor] = useState("#ccc");
+    const [userInitial, setUserInitial] = useState("U");
+    const [userName, setUserName] = useState("Usuário");
+    const navigate = useNavigate();
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const savedMode = localStorage.getItem('dark-mode');
         return savedMode === 'true';
@@ -14,9 +20,41 @@ const Navbar = () => {
         localStorage.setItem('dark-mode', JSON.stringify(isDarkMode));
     }, [isDarkMode]);
 
+    useEffect(() => {
+        setBgColor(getRandomColor());
+        const storedUserName = localStorage.getItem('name') || "Usuário";
+        setUserName(storedUserName);
+        setUserInitial(storedUserName.charAt(0).toUpperCase());
+      }, []);
+
     const toggleDarkMode = () => {
         setIsDarkMode((prevMode) => !prevMode);
     };
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen((prevState) => !prevState);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('name');
+        localStorage.removeItem('role');
+        navigate('/');
+    };
+
+    const handleChangePassword = () => {
+        navigate('/updatePass');
+    };
+
+    
+    const getRandomColor = () => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 
     return (
         <NavbarContainer>
@@ -90,9 +128,19 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         </g>
                     </svg>
                 </Image>
-                <DarkModeButton onClick={toggleDarkMode}>
-                    <DarkModeImage src={isDarkMode ? Moon : Sun} style={{ filter: isDarkMode ? 'invert(80%) sepia(20%) hue-rotate(190deg)' : 'none' }} />
-                </DarkModeButton>
+                <IconsContainer>
+                    <DarkModeButton onClick={toggleDarkMode}>
+                        <DarkModeImage src={isDarkMode ? Moon : Sun} style={{ filter: isDarkMode ? 'invert(80%) sepia(20%) hue-rotate(190deg)' : 'none' }} />
+                    </DarkModeButton>
+                    <UserIconContainer onClick={toggleDropdown}>
+                        <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
+                        <DropdownMenu isOpen={isDropdownOpen}>
+                            <DropdownItem><b>{userName}</b></DropdownItem>
+                            <DropdownItem onClick={handleChangePassword}>Mudar Senha</DropdownItem>
+                            <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
+                        </DropdownMenu>
+                    </UserIconContainer>
+                </IconsContainer>
             </NavbarContent>
         </NavbarContainer >
     )
