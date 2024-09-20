@@ -25,7 +25,7 @@ export const NavbarContainer = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 8px;
   }
 `;
@@ -39,7 +39,6 @@ export const NavbarContent = styled.div`
 `;
 
 export const Image = styled.div`
-  width: 200px;
   height: 50px;
   padding-left: 25px;
   display: flex;
