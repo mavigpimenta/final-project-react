@@ -1,8 +1,8 @@
 import Button from "../Button";
-import { Input } from "../Input";
 import { Select } from "../Select";
 import { FormWrapper } from "./styled.module";
 import { Date } from "../Date"
+import { Input } from "../Input";
 
 interface RegisterFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;

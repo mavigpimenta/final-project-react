@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
+import { ContentWrapper, Logo, PageWrapper, Worker } from "./styled.module";
 import { EditForm } from "../../components/EditForm";
 import PageEnveloper from "../../components/PageEnveloper";
-import Worker from "/FemaleWorker.svg";
+import WorkerImage from "/FemaleWorker.svg";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
@@ -38,7 +38,7 @@ const EditProfilePage = () => {
     return (
         <PageEnveloper>
             <PageWrapper>
-                <img src={Worker} />
+                <Worker src={WorkerImage} />
                 <ContentWrapper>
                     <Logo>
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"

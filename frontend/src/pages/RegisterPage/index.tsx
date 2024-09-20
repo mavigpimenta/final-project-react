@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { RegisterForm } from "../../components/RegisterForm";
-import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
+import { ContentWrapper, Logo, PageWrapper, Worker } from "./styled.module";
 import PageEnveloper from "../../components/PageEnveloper";
-import Worker from "/Worker.svg";
+import WorkerImage from "/Worker.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +44,7 @@ const RegisterPage = () => {
         <>
             <PageEnveloper>
                 <PageWrapper>
-                    <img src={Worker} />
+                    <Worker src={WorkerImage} />
                     <ContentWrapper>
                         <Logo>
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
