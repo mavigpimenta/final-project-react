@@ -49,7 +49,7 @@ export const SeeMoreButton = styled.a`
     color: #007BC0;
 
     &:hover {
-        color: #005a87;
+        color: #005A87;
     }
 `;
 
