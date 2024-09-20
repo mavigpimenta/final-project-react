@@ -5,4 +5,5 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 85vh;
+  gap: 40px;
 `;

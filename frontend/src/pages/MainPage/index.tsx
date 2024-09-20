@@ -8,6 +8,10 @@ const MainPage = () => {
             <PageWrapper>
                 <QuestionCard>
                 </QuestionCard>
+                <QuestionCard>
+                </QuestionCard>
+                <QuestionCard>
+                </QuestionCard>
             </PageWrapper>
         </PageEnveloper>
     )

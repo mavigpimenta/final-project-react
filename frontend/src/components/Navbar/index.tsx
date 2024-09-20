@@ -25,7 +25,7 @@ const Navbar = () => {
         const storedUserName = localStorage.getItem('name') || "Usuário";
         setUserName(storedUserName);
         setUserInitial(storedUserName.charAt(0).toUpperCase());
-      }, []);
+    }, []);
 
     const toggleDarkMode = () => {
         setIsDarkMode((prevMode) => !prevMode);
@@ -46,12 +46,11 @@ const Navbar = () => {
         navigate('/updatePass');
     };
 
-    
     const getRandomColor = () => {
         const letters = "0123456789ABCDEF";
         let color = "#";
         for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+            color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
     }
