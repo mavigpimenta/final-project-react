@@ -9,16 +9,24 @@ class PostController {
     
         try {
             const posts = await Post.find({ removedAt: null })
+                .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit)
                 .populate('userId', 'name')
                 .populate({
-                    path: 'comment',
+                    path: 'comments',
                     match: { removedAt: null },
                     options: { limit: 2 }, 
                     populate: { path: 'userId', select: 'name' }
                 })
                 .exec();
+
+            const postsWithComments = posts.map(post => {
+                 if (!post.comment) {
+                    post.comment = []; 
+                 }
+                return post;
+            });
     
             const totalPosts = await Post.countDocuments({ removedAt: null }); 
     
@@ -26,7 +34,7 @@ class PostController {
                 currentPage: page,
                 totalPages: Math.ceil(totalPosts / limit),
                 totalPosts,
-                posts
+                posts: postsWithComments
             });
         } catch (error) {
             return res.status(500).send({ message: "Failed to retrieve posts", data: error.message });
@@ -48,11 +56,12 @@ class PostController {
                 title: new RegExp(title, 'i'), 
                 removedAt: null
             })
+            .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit)
             .populate('userId', 'name')
             .populate({
-                path: 'comment',
+                path: 'comments',
                 match: { removedAt: null },
                 options: { limit: 2 }, 
                 populate: { path: 'userId', select: 'name' }

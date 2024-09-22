@@ -21,10 +21,19 @@ const Navbar = () => {
     }, [isDarkMode]);
 
     useEffect(() => {
-        setBgColor(getRandomColor());
         const storedUserName = localStorage.getItem('name') || "Usuário";
+        const storedBgColor = localStorage.getItem(`${storedUserName}-color`);
+        
         setUserName(formatUserName(storedUserName));
         setUserInitial(storedUserName.charAt(0).toUpperCase());
+
+        if (storedBgColor) {
+            setBgColor(storedBgColor);
+        } else {
+            const newColor = getRandomColor();
+            localStorage.setItem(`${storedUserName}-color`, newColor);
+            setBgColor(newColor);
+        }
     }, []);
 
     const toggleDarkMode = () => {
@@ -36,9 +45,7 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('name');
-        localStorage.removeItem('role');
+        localStorage.clear(); 
         navigate('/');
     };
 
@@ -55,7 +62,7 @@ const Navbar = () => {
         return color;
     }
 
-    const formatUserName = (name) => {
+    const formatUserName = (name: string) => {
         const namesArray = name.split(" ");
         const firstName = namesArray[0];
         const lastName = namesArray[namesArray.length - 1];
