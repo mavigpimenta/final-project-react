@@ -14,8 +14,8 @@ export const NavbarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: var(--bg-color);
-  position: relative; 
-  margin-bottom: 20px; 
+  position: relative;
+  margin-bottom: 20px;
 
   &::after {
     content: "";
@@ -39,7 +39,7 @@ export const NavbarContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 25px; 
+  padding: 0 25px;
 
   @media (min-width: 320px) {
     padding: 0;
@@ -50,31 +50,40 @@ export const Image = styled.div`
   height: 50px;
   padding-left: 25px;
   display: flex;
-  align-items: center; 
+  align-items: center;
 
   @media (min-width: 320px) {
-    width: 40%
+    width: 40%;
   }
 `;
 
 export const DarkModeButton = styled.button`
-  background-color: transparent; 
-  border-style: none;
+  background-color: transparent;
+  border: none;
   display: flex;
   align-items: center;
   cursor: pointer;
 `;
 
 export const DarkModeImage = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-right: 20px;
+  width: 30px;
+  height: 30px;
 `;
 
 export const IconsContainer = styled.div`
-    display: flex;
-    align-items: center;
-    padding-right: 25px; 
+  display: flex;
+  align-items: center;
+  padding-right: 25px;
+
+  & > div {
+    margin-left: 25px; 
+  }
+
+  @media (max-width: 425px) {
+    & > div {
+    margin-left: 11px; 
+  }
+  }
 `;
 
 export const UserIconContainer = styled.div`
@@ -105,11 +114,39 @@ export const DropdownMenu = styled.div<DropdownMenuProps>`
   border-radius: 5px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   width: 150px;
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+  display: ${(props) => (props.isOpen ? "block" : "none")};
   z-index: 10;
 `;
 
 export const DropdownItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
+export const LanguageIcon = styled.div`
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+export const LanguageDropdown = styled.div`
+  position: absolute;
+  top: 90px;
+  right: 25px;
+  background-color: var(--bg-color);
+  border-radius: 5px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  z-index: 10;
+`;
+
+export const LanguageItem = styled.div`
+  display: flex;
+  align-items: center;
   padding: 10px;
   cursor: pointer;
   &:hover {

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import PageEnveloper from "../../components/PageEnveloper"
+import axios from "axios";
+import { toast } from "react-toastify";
+import PageEnveloper from "../../components/PageEnveloper";
 import QuestionCard from "../../components/QuestionCard";
 import { AddButton, PageWrapper } from "./styled.module";
 import { ModalNewPost } from "../../components/ModalNewPost";
-import axios from "axios";
-import { toast } from "react-toastify";
+import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
 
 interface Post {
@@ -14,29 +15,31 @@ interface Post {
     comments: { description: string, userId: { name: string } }[];
 }
 
-const MainPage = () => {
+const MainPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [posts, setPosts] = useState<Post[]>([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    useEffect(() => {
-        const getAllPosts = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/post/getAll');
-                setPosts(response.data.posts);
-                console.log(response.data);
-            } catch (error) {
-                console.log(error);
-                toast.error('Erro ao carregar...')
-            }
-        };
+    const getAllPosts = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8000/post/getAll?page=${currentPage}`);
+            setPosts(response.data.posts);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            console.log(error);
+            toast.error('Erro ao carregar...');
+        }
+    };
 
+    useEffect(() => {
         getAllPosts();
-    }, []);
+    }, [currentPage]);
 
     const handleSubmitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -58,9 +61,7 @@ const MainPage = () => {
 
             if (response.status === 201) {
                 toast.success("Post criado com sucesso!");
-
                 setPosts((prevPosts) => [...prevPosts, response.data.post]);
-
                 closeModal();
                 setTitle('');
                 setDescription('');
@@ -84,19 +85,23 @@ const MainPage = () => {
                 {posts && posts.map((post) => (
                     post && post.title ? (
                         <QuestionCard key={post._id} title={post.title} comments={post.comments.map(comment => ({
-                                description: comment.description,
-                                userName: comment.userId?.name || 'Anônimo'
-                            }))}
-                        >
+                            description: comment.description,
+                            userName: comment.userId?.name || 'Anônimo'
+                        }))}>
                             {truncateDescription(post.description)}
                         </QuestionCard>
                     ) : null
                 ))}
                 <AddButton onClick={openModal} />
                 <ModalNewPost onSubmit={handleSubmitNewPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isOpen={isModalOpen} onClose={closeModal} />
+                <Pagination 
+                    currentPage={currentPage} 
+                    totalPages={totalPages} 
+                    onPageChange={setCurrentPage} 
+                />
             </PageWrapper>
         </PageEnveloper>
-    )
-}
+    );
+};
 
 export default MainPage;

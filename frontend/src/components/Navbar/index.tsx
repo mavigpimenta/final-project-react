@@ -1,14 +1,18 @@
-import { NavbarContainer, Image, DarkModeButton, NavbarContent, DarkModeImage, UserIconContainer, UserIcon, DropdownMenu, DropdownItem, IconsContainer } from "./styled.module";
+import { NavbarContainer, Image, DarkModeButton, NavbarContent, DarkModeImage, UserIconContainer, UserIcon, DropdownMenu, DropdownItem, IconsContainer, LanguageIcon, LanguageDropdown, LanguageItem } from "./styled.module";
 import { useEffect, useState } from "react";
 import Sun from "/Sun.svg"
 import Moon from "/Moon.svg"
 import { useNavigate } from "react-router-dom";
+import USFlag from "/USFlag.png";
+import BRFlag from "/BRFlag.png";
 
 const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [bgColor, setBgColor] = useState("#ccc");
     const [userInitial, setUserInitial] = useState("U");
     const [userName, setUserName] = useState("Usuário");
+    const [selectedLanguage, setSelectedLanguage] = useState(BRFlag);
+    const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
     const navigate = useNavigate();
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const savedMode = localStorage.getItem('dark-mode');
@@ -23,7 +27,7 @@ const Navbar = () => {
     useEffect(() => {
         const storedUserName = localStorage.getItem('name') || "Usuário";
         const storedBgColor = localStorage.getItem(`${storedUserName}-color`);
-        
+
         setUserName(formatUserName(storedUserName));
         setUserInitial(storedUserName.charAt(0).toUpperCase());
 
@@ -45,12 +49,21 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-        localStorage.clear(); 
+        localStorage.clear();
         navigate('/');
     };
 
     const handleChangePassword = () => {
         navigate('/updatePass');
+    };
+
+    const toggleLanguageDropdown = () => {
+        setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+    };
+
+    const handleLanguageSelect = (flag: string) => {
+        setSelectedLanguage(flag);
+        setIsLanguageDropdownOpen(false);
     };
 
     const getRandomColor = () => {
@@ -145,6 +158,19 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                     <DarkModeButton onClick={toggleDarkMode}>
                         <DarkModeImage src={isDarkMode ? Moon : Sun} style={{ filter: isDarkMode ? 'invert(80%) sepia(20%) hue-rotate(190deg)' : 'none' }} />
                     </DarkModeButton>
+                    <LanguageIcon onClick={toggleLanguageDropdown}>
+                        <img src={selectedLanguage} alt="Selected Language" style={{ width: "30px", height: "30px" }} />
+                    </LanguageIcon>
+                    {isLanguageDropdownOpen && (
+                        <LanguageDropdown>
+                            <LanguageItem onClick={() => handleLanguageSelect(BRFlag)}>
+                                <img src={BRFlag} alt="Português" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Português
+                            </LanguageItem>
+                            <LanguageItem onClick={() => handleLanguageSelect(USFlag)}>
+                                <img src={USFlag} alt="Inglês" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Inglês
+                            </LanguageItem>
+                        </LanguageDropdown>
+                    )}
                     <UserIconContainer onClick={toggleDropdown}>
                         <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
                         <DropdownMenu isOpen={isDropdownOpen}>
