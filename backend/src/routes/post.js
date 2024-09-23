@@ -7,6 +7,7 @@ route
     .post('/create', authMiddleware, PostController.create)
     .patch('/edit/:id', authMiddleware, PostController.edit)
     .get('/getAll', PostController.getAll)
+    .get('/getById/:id', PostController.getById)
     .get('/getTitle', PostController.getByTitle)
     .delete('/delete', authMiddleware, PostController.delete)
 

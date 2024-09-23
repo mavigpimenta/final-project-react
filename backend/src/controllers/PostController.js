@@ -94,7 +94,7 @@ class PostController {
             const post = await Post.findById(id)
                 .populate('userId', 'name')
                 .populate({
-                    path: 'comment',
+                    path: 'comments',
                     match: { removedAt: null },
                     populate: { path: 'userId', select: 'name' }
                 })
