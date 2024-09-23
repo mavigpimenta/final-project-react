@@ -26,7 +26,7 @@ export const LoginPage = () => {
       localStorage.setItem('role', decodedToken.role);
       localStorage.setItem('name', decodedToken.name);
 
-      navigate('/updatePass')
+      navigate('/home')
     } catch (error) {
       console.log('An unexpected error occurred. Please try again later.');
     }
