@@ -22,7 +22,9 @@ export const AddButton = styled.button`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   cursor: pointer;
 
-  background-image: url("/Add.svg");
+  background-image: url("/Add.png");
+  background-repeat: no-repeat;
+  background-position: center;
 
   &:hover {
     background-color: #005A87;
