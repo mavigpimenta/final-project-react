@@ -5,6 +5,7 @@ import { AddButton, PageWrapper } from "./styled.module";
 import { ModalNewPost } from "../../components/ModalNewPost";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Search from "../../components/Search";
 
 interface Post {
     _id: string;
@@ -79,6 +80,7 @@ const MainPage = () => {
     return (
         <PageEnveloper>
             <PageWrapper>
+                <Search />
                 {posts && posts.map((post) => (
                     post && post.title ? (
                         <QuestionCard key={post._id} title={post.title} comments={post.comments.map(comment => ({

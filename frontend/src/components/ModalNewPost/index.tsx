@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Input } from "../Input";
 import { CloseButton, ModalContent, ModalOverlay, PostForm } from "./styled.module";
 import { Textarea } from "../Textarea";
@@ -30,4 +29,3 @@ export const ModalNewPost: React.FC<ModalFormProps> = ({onSubmit, title, descrip
         </ModalOverlay>
     );
 };
-

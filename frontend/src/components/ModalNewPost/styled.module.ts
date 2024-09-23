@@ -23,8 +23,6 @@ export const ModalContent = styled.div`
   @media (max-width: 425px) {
     width: 80%
   }
-
-
 `;
 
 export const CloseButton = styled.button`
