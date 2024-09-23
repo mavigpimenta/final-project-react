@@ -46,9 +46,9 @@ export const Comment = styled.p`
     font-size: 0.9rem; 
     overflow-wrap: break-word; 
     word-wrap: break-word; 
-    hyphens: auto
+    hyphens: auto;
     flex: 1;
-    margin; 0;
+    margin: 0;
     line-height: 1.2;
 `;
 

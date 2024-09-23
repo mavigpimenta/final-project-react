@@ -6,7 +6,7 @@ interface CommentProps {
     userName: string;
 }
 
-const QuestionCard = ({ title, children, comments }: { title: string, children: string, comments: CommentProps[]}) => {
+const QuestionCard = ({ title, children, comments, id }: { title: string, children: string, comments: CommentProps[], id: string}) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
@@ -64,7 +64,7 @@ const QuestionCard = ({ title, children, comments }: { title: string, children: 
                 </Comment>
             )}
             <SeeMorePosition>
-                <SeeMoreButton href="/home">Ver mais</SeeMoreButton>
+                <SeeMoreButton href={`/detail/${id}`}>Ver mais</SeeMoreButton>
             </SeeMorePosition>
         </CardWrapper>
     )
