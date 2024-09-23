@@ -15,7 +15,7 @@ interface Post {
 
 const MainPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [posts, setPosts] = useState<Post[]>([]); 
+    const [posts, setPosts] = useState<Post[]>([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -25,8 +25,9 @@ const MainPage = () => {
     useEffect(() => {
         const getAllPosts = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/post/getAll'); 
+                const response = await axios.get('http://localhost:8000/post/getAll');
                 setPosts(response.data.posts);
+                console.log(response.data);
             } catch (error) {
                 console.log(error);
                 toast.error('Erro ao carregar...')
@@ -35,7 +36,7 @@ const MainPage = () => {
 
         getAllPosts();
     }, []);
-    
+
     const handleSubmitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -50,7 +51,7 @@ const MainPage = () => {
                 description
             }, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`, 
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             });
 
@@ -71,23 +72,25 @@ const MainPage = () => {
 
     const truncateDescription = (description: string) => {
         return description.length > 440
-            ? description.slice(0, 440) + "..." 
+            ? description.slice(0, 440) + "..."
             : description;
     };
-    
+
     return (
         <PageEnveloper>
             <PageWrapper>
-                {posts.map((post) => (
-                    <QuestionCard key={post._id} title={post.title} comments={post.comments.map(comment => ({
-                            description: comment.description,
-                            userName: comment.userId.name
-                        }))}
-                    >
-                        {truncateDescription(post.description)}
-                    </QuestionCard>
+                {posts && posts.map((post) => (
+                    post && post.title ? (
+                        <QuestionCard key={post._id} title={post.title} comments={post.comments.map(comment => ({
+                                description: comment.description,
+                                userName: comment.userId?.name || 'Anônimo'
+                            }))}
+                        >
+                            {truncateDescription(post.description)}
+                        </QuestionCard>
+                    ) : null
                 ))}
-                <AddButton onClick={openModal}/>
+                <AddButton onClick={openModal} />
                 <ModalNewPost onSubmit={handleSubmitNewPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isOpen={isModalOpen} onClose={closeModal} />
             </PageWrapper>
         </PageEnveloper>
