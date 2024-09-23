@@ -48,9 +48,9 @@ export const SearchUsers: React.FC = () => {
 
     const formatDate = (dateString: string): string => {
         const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); 
-        const year = date.getFullYear();
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0'); 
+        const year = date.getUTCFullYear();
         return `${day}/${month}/${year}`;
     };
 
@@ -69,7 +69,7 @@ export const SearchUsers: React.FC = () => {
                 <Search title={searchTerm} setTitle={setSearchTerm} />
                 {users.map((user) => (
                     <CardWrapper key={user._id}>
-                        <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0]}</UserIcon>
+                        <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0].toUpperCase()}</UserIcon>
                         <Title>{user.name}</Title>
                         <Description><b>EDV:</b> {user.edv}</Description>
                         <Description><b>Data de Nascimento: </b>{formatDate(user.birthDate)}</Description>

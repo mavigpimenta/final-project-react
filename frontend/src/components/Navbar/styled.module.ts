@@ -51,6 +51,7 @@ export const Image = styled.div`
   padding-left: 25px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   @media (min-width: 320px) {
     width: 40%;

@@ -61,6 +61,10 @@ const Navbar = () => {
         navigate('/users');
     };
 
+    const handleHome = () => {
+        navigate('/home');
+    };
+
     const toggleLanguageDropdown = () => {
         setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
     };
@@ -89,7 +93,7 @@ const Navbar = () => {
     return (
         <NavbarContainer>
             <NavbarContent>
-                <Image>
+                <Image onClick={handleHome}>
                     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                         width="200px" height="50px" viewBox="0 0 1539.000000 379.000000"
                         preserveAspectRatio="xMidYMid meet">
