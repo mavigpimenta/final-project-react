@@ -1,9 +1,14 @@
 import { SearchContainer, SearchImage, StyledSearch } from "./styled.module";
 
-const SearchInput = () => {
+interface SearchInputProps {
+    title: string;
+    setTitle: (title: string) => void;
+}
+
+const SearchInput: React.FC<SearchInputProps> = ({ title, setTitle }) => {
     return (
         <SearchContainer>
-            <StyledSearch></StyledSearch>
+            <StyledSearch value={title} onChange={(e) => setTitle(e.target.value)}></StyledSearch>
             <SearchImage><svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 64.000000 64.000000"
                 preserveAspectRatio="xMidYMid meet">

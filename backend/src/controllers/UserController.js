@@ -112,6 +112,33 @@ class UserController {
             return res.status(500).send({ message: "Something went wrong.", data: error.message });
         }
     }
+
+    static async searchUsers(req, res) {
+        const { name, page = 1 } = req.query;
+        const limit = 10; 
+        const skip = (page - 1) * limit; 
+
+        try {
+            let query = {};
+            if (name) {
+                query = { name: { $regex: name, $options: 'i' } };
+            }
+
+            const users = await User.find(query).skip(skip).limit(limit);
+            const totalUsers = await User.countDocuments(query); 
+
+            const totalPages = Math.ceil(totalUsers / limit); 
+
+            return res.status(200).json({
+                users,
+                totalPages,
+                currentPage: page,
+                totalUsers,
+            });
+        } catch (error) {
+            return res.status(500).send({ message: "Something went wrong.", data: error.message });
+        }
+    }
 }
 
 module.exports = UserController;

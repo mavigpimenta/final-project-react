@@ -26,20 +26,21 @@ const MainPage: React.FC = () => {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const getAllPosts = async () => {
+    const getAllPosts = async (searchTitle: string = '') => {
         try {
-            const response = await axios.get(`http://localhost:8000/post/getAll?page=${currentPage}`);
+            const response = await axios.get(`http://localhost:8000/post/getTitle?title=${searchTitle}&page=${currentPage}`);
             setPosts(response.data.posts);
             setTotalPages(response.data.totalPages);
+            console.log(response.data);
         } catch (error) {
             console.log(error);
             toast.error('Erro ao carregar...');
         }
     };
-
+    
     useEffect(() => {
-        getAllPosts();
-    }, [currentPage]);
+        getAllPosts(title);
+    }, [currentPage, title]);
 
     const handleSubmitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -81,7 +82,7 @@ const MainPage: React.FC = () => {
     return (
         <PageEnveloper>
             <PageWrapper>
-                <Search />
+                <Search title={title} setTitle={setTitle} />
                 {posts && posts.map((post) => (
                     post && post.title ? (
                         <QuestionCard key={post._id} title={post.title} comments={post.comments.map(comment => ({
@@ -94,11 +95,7 @@ const MainPage: React.FC = () => {
                 ))}
                 <AddButton onClick={openModal} />
                 <ModalNewPost onSubmit={handleSubmitNewPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isOpen={isModalOpen} onClose={closeModal} />
-                <Pagination 
-                    currentPage={currentPage} 
-                    totalPages={totalPages} 
-                    onPageChange={setCurrentPage} 
-                />
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
             </PageWrapper>
         </PageEnveloper>
     );

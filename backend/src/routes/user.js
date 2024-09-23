@@ -7,5 +7,6 @@ route
     .post('/register', UserController.register)
     .post('/login', UserController.login)
     .put('/update', authMiddleware, UserController.updatePassword)
+    .get('/getUsers', authMiddleware, UserController.searchUsers)
 
 module.exports = route;

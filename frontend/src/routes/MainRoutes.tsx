@@ -4,6 +4,7 @@ import EditProfilePage from "../pages/EditProfilePage";
 import RegisterPage from "../pages/RegisterPage";
 import MainPage from "../pages/MainPage";
 import 'react-toastify/dist/ReactToastify.css';
+import { SearchUsers } from "../pages/SearchUsers";
 
 export const routes = createBrowserRouter([
   {
@@ -21,5 +22,9 @@ export const routes = createBrowserRouter([
   {
     path: "/home",
     element: <MainPage />,
+  },
+  {
+    path: "/users",
+    element: <SearchUsers />
   }
 ]);

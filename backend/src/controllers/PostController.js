@@ -44,34 +44,36 @@ class PostController {
     static async getByTitle(req, res) {
         const { title } = req.query; 
     
-        if (!title)
-            return res.status(400).send({ message: "Title query parameter is required" });
-    
         const page = parseInt(req.query.page) || 1; 
         const limit = parseInt(req.query.limit) || 10; 
         const skip = (page - 1) * limit; 
     
         try {
-            const posts = await Post.find({ 
-                title: new RegExp(title, 'i'), 
-                removedAt: null
-            })
-            .sort({ createdAt: -1 })
-            .skip(skip)
-            .limit(limit)
-            .populate('userId', 'name')
-            .populate({
-                path: 'comments',
-                match: { removedAt: null },
-                options: { limit: 2 }, 
-                populate: { path: 'userId', select: 'name' }
-            })
-            .exec();
+            let query = { removedAt: null };
     
-            const totalPosts = await Post.countDocuments({ 
-                title: new RegExp(title, 'i'), 
-                removedAt: null 
-            }); 
+            if (title) {
+                query = {
+                    $or: [
+                        { title: new RegExp(title, 'i'), removedAt: null },
+                        { userId: { $in: await User.find({ name: new RegExp(title, 'i') }).distinct('_id') } },
+                    ]
+                };
+            }
+    
+            const posts = await Post.find(query)
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .populate('userId', 'name')
+                .populate({
+                    path: 'comments',
+                    match: { removedAt: null },
+                    options: { limit: 2 }, 
+                    populate: { path: 'userId', select: 'name' }
+                })
+                .exec();
+    
+            const totalPosts = await Post.countDocuments(query);
     
             return res.status(200).json({
                 currentPage: page,
@@ -83,6 +85,7 @@ class PostController {
             return res.status(500).send({ message: "Failed to search posts", data: error.message });
         }
     }
+    
     
     static async getById(req, res) {
         const { id } = req.params; 
