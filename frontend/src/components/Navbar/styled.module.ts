@@ -101,7 +101,7 @@ export const DropdownMenu = styled.div<DropdownMenuProps>`
   position: absolute;
   top: 50px;
   right: 0;
-  background-color: white;
+  background-color: var(--bg-color);
   border-radius: 5px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   width: 150px;
