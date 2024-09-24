@@ -19,6 +19,7 @@ const MainPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [posts, setPosts] = useState<Post[]>([]);
     const [title, setTitle] = useState('');
+    const [titleSearch, setTitleSearch] = useState('');
     const [description, setDescription] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -39,8 +40,8 @@ const MainPage: React.FC = () => {
     };
     
     useEffect(() => {
-        getAllPosts(title);
-    }, [currentPage, title]);
+        getAllPosts(titleSearch);
+    }, [currentPage, titleSearch]);
 
     const handleSubmitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -82,7 +83,7 @@ const MainPage: React.FC = () => {
     return (
         <PageEnveloper>
             <PageWrapper>
-                <Search title={title} setTitle={setTitle} />
+                <Search title={titleSearch} setTitle={setTitleSearch} />
                 {posts && posts.map((post) => (
                     post && post.title ? (
                         <QuestionCard id={post._id} key={post._id} title={post.title} comments={post.comments.map(comment => ({

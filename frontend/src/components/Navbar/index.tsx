@@ -184,7 +184,7 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         <DropdownMenu isOpen={isDropdownOpen}>
                             <DropdownItem><b>{userName}</b></DropdownItem>
                             <DropdownItem onClick={handleChangePassword}>Mudar Senha</DropdownItem>
-                            <DropdownItem onClick={handleSearchUsers}>Buscar Users</DropdownItem>
+                            <DropdownItem onClick={handleSearchUsers}>Usuários</DropdownItem>
                             <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
                         </DropdownMenu>
                     </UserIconContainer>
