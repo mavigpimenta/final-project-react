@@ -5,8 +5,10 @@ import PageEnveloper from "../../components/PageEnveloper";
 import { CardWrapper, Title, Description, UserIcon } from "../../components/QuestionCard/styled.module";
 import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
-import { PageWrapper } from "./styled.module";
+import { Header, IconWrapper, PageWrapper, StyledIcon } from "./styled.module";
 import { useLanguage } from "../../context/LanguageContext";
+import Delete from "/Delete.svg";
+import Edit from "/Edit.svg";
 
 interface User {
     _id: string;
@@ -17,7 +19,7 @@ interface User {
     iconColor: string;
 }
 
-export const SearchUsers: React.FC = () => {
+export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => void, onEdit?: () => void }) => {
     const [users, setUsers] = useState<User[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -86,7 +88,13 @@ export const SearchUsers: React.FC = () => {
                 <Search title={searchTerm} setTitle={setSearchTerm} />
                 {users.map((user) => (
                     <CardWrapper key={user._id}>
-                        <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0].toUpperCase()}</UserIcon>
+                        <Header>
+                            <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0].toUpperCase()}</UserIcon>
+                            <IconWrapper>
+                                <StyledIcon src={Delete} onClick={onDelete} />
+                                <StyledIcon src={Edit} onClick={onEdit} />
+                            </IconWrapper>
+                        </Header>
                         <Title>{user.name}</Title>
                         <Description><b>EDV:</b> {user.edv}</Description>
                         <Description><b>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento: ' : selectedLanguage === 'en-US' ? 'Birth Date: ' : 'Geburtsdatum: '}</b>{formatDate(user.birthDate)}</Description>

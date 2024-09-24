@@ -30,3 +30,19 @@ export const AddButton = styled.button`
     background-color: #005A87;
   }
 `;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+
+export const StyledIcon = styled.img`
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+`;
