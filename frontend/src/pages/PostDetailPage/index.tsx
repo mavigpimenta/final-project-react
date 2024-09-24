@@ -109,7 +109,7 @@ const PostDetailPage = () => {
     return (
         <>
             <PageEnveloper>
-                <QuestionCard onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} comments={post.comments.map(comment => ({
+                <QuestionCard isDetails={true} onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} comments={post.comments.map(comment => ({
                     description: comment.description,
                     userName: comment.userId?.name || 'Anônimo'
                 }))}>

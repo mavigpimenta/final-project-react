@@ -10,7 +10,7 @@ interface CommentProps {
     userName: string;
 }
 
-const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment  }: { title: string, children: string, comments: CommentProps[], id: string, onDelete: () => void, onEdit: () => void, handleSubmitNewComment: () => void, setDescriptionComment: (value: string) => void, descriptionComment: string }) => {
+const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails  }: { isDetails: boolean, title: string, children: string, comments: CommentProps[], id: string, onDelete?: () => void, onEdit?: () => void, handleSubmitNewComment?: () => void, setDescriptionComment?: (value: string) => void, descriptionComment?: string }) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage, setLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
@@ -19,9 +19,9 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
 
     useEffect(() => {
         comments.forEach((comment) => {
-            const storedColor = localStorage.getItem(comment.userName); 
+            const storedColor = localStorage.getItem(comment.userName);
             if (!storedColor) {
-                const newColor = generateColorForUser(comment.userName); 
+                const newColor = generateColorForUser(comment.userName);
                 localStorage.setItem(comment.userName, newColor);
                 setUserColors((prevColors) => ({
                     ...prevColors,
@@ -62,8 +62,8 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
     };
 
     const truncateDescription = (description: string) => {
-        return description.length > 64 
-            ? description.slice(0, 64) + "..." 
+        return description.length > 64
+            ? description.slice(0, 64) + "..."
             : description;
     };
 
@@ -85,20 +85,22 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
 
     return (
         <CardWrapper>
-            <Header>
-                <StyledIcon src={Delete} onClick={onDelete}/>
-                <StyledIcon src={Edit} onClick={onEdit} />
-            </Header>
+            {isDetails && (
+                <Header>
+                    <StyledIcon src={Delete} onClick={onDelete} />
+                    <StyledIcon src={Edit} onClick={onEdit} />
+                </Header>
+            )}
             <Title>{title}</Title>
             <Description>{children}</Description>
             <Line />
             {comments && comments.length > 0 ? (
                 comments.map((comment, index) => (
                     <CommentWrapper>
-                    <Comment key={index}>
-                        <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>{comment.userName.charAt(0).toUpperCase()}</UserIcon>
-                        {truncateDescription(comment.description)}
-                    </Comment>
+                        <Comment key={index}>
+                            <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>{comment.userName.charAt(0).toUpperCase()}</UserIcon>
+                            {truncateDescription(comment.description)}
+                        </Comment>
                     </CommentWrapper>
                 ))
             ) : (
@@ -107,14 +109,18 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
                     {selectedLanguage === 'pt-BR' ? 'Não há comentários ainda.' : selectedLanguage === 'en-US' ? 'No comments yet.' : 'Es liegen noch keine Kommentare vor.'}
                 </Comment>
             )}
-            <InputContainer>
-                <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
-                <CommentInput onSubmit={handleSubmitNewComment} description={descriptionComment} setDescription={setDescriptionComment} />
-            </InputContainer>
-
-            <SeeMorePosition>
-                <SeeMoreButton href={`/detail/${id}`}>{selectedLanguage === 'pt-BR' ? 'Ver mais' : selectedLanguage === 'en-US' ? 'See more' : 'Mehr sehen'}</SeeMoreButton>
-            </SeeMorePosition>
+            {isDetails ? (
+                <InputContainer>
+                    <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
+                    <CommentInput onSubmit={handleSubmitNewComment} description={descriptionComment} setDescription={setDescriptionComment} />
+                </InputContainer>
+            ) : (
+                <SeeMorePosition>
+                    <SeeMoreButton href={`/detail/${id}`}>
+                        {selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}
+                    </SeeMoreButton>
+                </SeeMorePosition>
+            )}
         </CardWrapper>
     )
 }
