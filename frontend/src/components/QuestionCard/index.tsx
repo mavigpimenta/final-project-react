@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CardWrapper, Comment, CommentWrapper, CreationDetail, Description, Header, InputContainer, Line, SeeMoreButton, SeeMorePosition, StyledIcon, Title, UserDetail, UserIcon } from "./styled.module";
+import { CardWrapper, Comment, CommentWrapper, CreationDetail, Description, Header, InputContainer, Line, SeeMoreButton, SeeMorePosition, StyledIcon, StyledIconComment, Title, UserDetail, UserIcon } from "./styled.module";
 import { useLanguage } from "../../context/LanguageContext";
 import Delete from "/Delete.svg";
 import Edit from "/Edit.svg";
@@ -116,6 +116,12 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
                             <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>{comment.userName.charAt(0).toUpperCase()}</UserIcon>
                             {truncateDescription(comment.description)}
                         </Comment>
+                        {isDetails && (
+                            <Header>
+                                <StyledIconComment src={Delete} onClick={onDelete} />
+                                <StyledIconComment src={Edit} onClick={onEdit} />
+                            </Header>
+                        )}
                     </CommentWrapper>
                 ))
             ) : (

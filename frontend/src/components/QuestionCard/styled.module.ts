@@ -39,6 +39,12 @@ export const StyledIcon = styled.img`
     cursor: pointer;
 `;
 
+export const StyledIconComment = styled.img`
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+`;
+
 export const Description = styled.p`
     text-align: justify;
     font-size: 1rem;
