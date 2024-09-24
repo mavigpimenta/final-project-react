@@ -9,6 +9,6 @@ route
     .get('/getAll', PostController.getAll)
     .get('/getById/:id', PostController.getById)
     .get('/getTitle', PostController.getByTitle)
-    .delete('/delete', authMiddleware, PostController.delete)
+    .delete('/delete/:id', authMiddleware, PostController.delete)
 
 module.exports = route;

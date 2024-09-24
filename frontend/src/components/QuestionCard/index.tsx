@@ -10,7 +10,7 @@ interface CommentProps {
     userName: string;
 }
 
-const QuestionCard = ({ title, children, comments, id }: { title: string, children: string, comments: CommentProps[], id: string}) => {
+const QuestionCard = ({ title, children, comments, id, onDelete, onEdit  }: { title: string, children: string, comments: CommentProps[], id: string, onDelete: () => void, onEdit: () => void }) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage, setLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
@@ -91,8 +91,8 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
     return (
         <CardWrapper>
             <Header>
-                <StyledIcon src={Delete} />
-                <StyledIcon src={Edit} />
+                <StyledIcon src={Delete} onClick={onDelete}/>
+                <StyledIcon src={Edit} onClick={onEdit} />
             </Header>
             <Title>{title}</Title>
             <Description>{children}</Description>
