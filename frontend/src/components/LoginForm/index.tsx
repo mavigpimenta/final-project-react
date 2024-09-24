@@ -21,9 +21,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, edv, setEdv, pas
   return (
     <FormWrapper onSubmit={onSubmit}>
       <Input label="EDV" type="text" value={edv} onChange={(e) => setEdv(e.target.value)} />
-      <Input label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Button>Entrar</Button>
-      <Button onClick={handleRegisterClick}>Registre-se</Button>
+      <Input label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <Button>Login</Button>
+      <Button onClick={handleRegisterClick}>Register</Button>
     </FormWrapper>
   );
 };

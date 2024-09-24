@@ -6,6 +6,7 @@ import { CardWrapper, Title, Description, UserIcon } from "../../components/Ques
 import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
 import { PageWrapper } from "./styled.module";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface User {
     _id: string;
@@ -21,6 +22,8 @@ export const SearchUsers: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
+    const { selectedLanguage, setLanguage } = useLanguage();
+    const role = localStorage.getItem("role");
 
     const fetchUsers = async () => {
         try {
@@ -54,13 +57,22 @@ export const SearchUsers: React.FC = () => {
         return `${day}/${month}/${year}`;
     };
 
-    const getRoleLabel = (role: string): string => {
-        const roleMap: { [key: string]: string } = {
-            ADMIN: "Administrador",
-            INSTRUCTOR: "Instrutor",
-            STUDENT: "Aluno"
+    const getRoleLabel = (role: string, selectedLanguage: string): string => {
+        const roleMap: { [key: string]: { [key: string]: string } } = {
+            ADMIN: {
+                'pt-BR': "Administrador",
+                'en-US': "Administrator"
+            },
+            INSTRUCTOR: {
+                'pt-BR': "Instrutor",
+                'en-US': "Instructor"
+            },
+            STUDENT: {
+                'pt-BR': "Aluno",
+                'en-US': "Student"
+            }
         };
-        return roleMap[role] || role; 
+        return roleMap[role]?.[selectedLanguage] || role; 
     };
 
     return (
@@ -72,8 +84,8 @@ export const SearchUsers: React.FC = () => {
                         <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0].toUpperCase()}</UserIcon>
                         <Title>{user.name}</Title>
                         <Description><b>EDV:</b> {user.edv}</Description>
-                        <Description><b>Data de Nascimento: </b>{formatDate(user.birthDate)}</Description>
-                        <Description><b>Cargo: </b>{getRoleLabel(user.role)}</Description>
+                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento: ' : 'Birth Date: '}</b>{formatDate(user.birthDate)}</Description>
+                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Cargo: ' : 'Role: '}</b>{getRoleLabel(role, selectedLanguage)}</Description>
                     </CardWrapper>
                 ))}
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />

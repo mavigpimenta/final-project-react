@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CardWrapper, Comment, CommentWrapper, Description, Line, SeeMoreButton, SeeMorePosition, Title, UserIcon } from "./styled.module";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface CommentProps {
     description: string;
@@ -8,6 +9,7 @@ interface CommentProps {
 
 const QuestionCard = ({ title, children, comments, id }: { title: string, children: string, comments: CommentProps[], id: string}) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
+    const { selectedLanguage, setLanguage } = useLanguage();
 
     useEffect(() => {
         comments.forEach((comment) => {
@@ -60,11 +62,11 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
             ) : (
                 <Comment>
                     <UserIcon bgColor='#ccc'>S</UserIcon>
-                    Não há comentários ainda.
+                    {selectedLanguage === 'pt-BR' ? 'Não há comentários ainda.' : 'No comments yet.'}
                 </Comment>
             )}
             <SeeMorePosition>
-                <SeeMoreButton href={`/detail/${id}`}>Ver mais</SeeMoreButton>
+                <SeeMoreButton href={`/detail/${id}`}>{selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}</SeeMoreButton>
             </SeeMorePosition>
         </CardWrapper>
     )

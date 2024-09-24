@@ -1,3 +1,4 @@
+import { useLanguage } from "../../context/LanguageContext";
 import { DatePickerWrapper, StyledDatePicker } from "./styled.module";
 
 interface CustomDatePickerProps {
@@ -7,9 +8,11 @@ interface CustomDatePickerProps {
 }
 
 export const Date: React.FC<CustomDatePickerProps> = ({selected, onChange, placeholder}) => {
+  const { selectedLanguage, setLanguage } = useLanguage();
+  
   return (
     <DatePickerWrapper>
-      <label>Data de nascimento</label>
+      <label>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento' : 'Birth Date'}</label>
       <StyledDatePicker selected={selected} onChange={onChange} dateFormat="dd/MM/yyyy" placeholderText={placeholder} showPopperArrow={false} isClearable />
     </DatePickerWrapper>
   );

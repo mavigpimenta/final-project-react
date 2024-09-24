@@ -1,19 +1,26 @@
 import { NavbarContainer, Image, DarkModeButton, NavbarContent, DarkModeImage, UserIconContainer, UserIcon, DropdownMenu, DropdownItem, IconsContainer, LanguageIcon, LanguageDropdown, LanguageItem } from "./styled.module";
 import { useEffect, useState } from "react";
-import Sun from "/Sun.svg"
-import Moon from "/Moon.svg"
+import Sun from "/Sun.svg";
+import Moon from "/Moon.svg";
 import { useNavigate } from "react-router-dom";
 import USFlag from "/USFlag.png";
 import BRFlag from "/BRFlag.png";
+import { useLanguage } from "../../context/LanguageContext";
 
 const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [bgColor, setBgColor] = useState("#ccc");
     const [userInitial, setUserInitial] = useState("U");
     const [userName, setUserName] = useState("Usuário");
-    const [selectedLanguage, setSelectedLanguage] = useState(BRFlag);
     const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
     const navigate = useNavigate();
+    const { selectedLanguage, setLanguage } = useLanguage();
+
+    const handleLanguageSelect = (lang: string) => {
+        setLanguage(lang); 
+        setIsLanguageDropdownOpen(false); 
+    };
+
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const savedMode = localStorage.getItem('dark-mode');
         return savedMode === 'true';
@@ -69,11 +76,6 @@ const Navbar = () => {
         setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
     };
 
-    const handleLanguageSelect = (flag: string) => {
-        setSelectedLanguage(flag);
-        setIsLanguageDropdownOpen(false);
-    };
-
     const getRandomColor = () => {
         const letters = "0123456789ABCDEF";
         let color = "#";
@@ -81,7 +83,7 @@ const Navbar = () => {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
-    }
+    };
 
     const formatUserName = (name: string) => {
         const namesArray = name.split(" ");
@@ -167,14 +169,14 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         <DarkModeImage src={isDarkMode ? Moon : Sun} style={{ filter: isDarkMode ? 'invert(80%) sepia(20%) hue-rotate(190deg)' : 'none' }} />
                     </DarkModeButton>
                     <LanguageIcon onClick={toggleLanguageDropdown}>
-                        <img src={selectedLanguage} alt="Selected Language" style={{ width: "30px", height: "30px" }} />
+                        <img src={selectedLanguage === 'pt-BR' ? BRFlag : USFlag} alt="Selected Language" style={{ width: "30px", height: "30px" }} />
                     </LanguageIcon>
                     {isLanguageDropdownOpen && (
                         <LanguageDropdown>
-                            <LanguageItem onClick={() => handleLanguageSelect(BRFlag)}>
+                            <LanguageItem onClick={() => handleLanguageSelect('pt-BR')}>
                                 <img src={BRFlag} alt="Português" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Português
                             </LanguageItem>
-                            <LanguageItem onClick={() => handleLanguageSelect(USFlag)}>
+                            <LanguageItem onClick={() => handleLanguageSelect('en-US')}>
                                 <img src={USFlag} alt="Inglês" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Inglês
                             </LanguageItem>
                         </LanguageDropdown>
@@ -183,15 +185,15 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
                         <DropdownMenu isOpen={isDropdownOpen}>
                             <DropdownItem><b>{userName}</b></DropdownItem>
-                            <DropdownItem onClick={handleChangePassword}>Mudar Senha</DropdownItem>
-                            <DropdownItem onClick={handleSearchUsers}>Usuários</DropdownItem>
-                            <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
+                            <DropdownItem onClick={handleChangePassword}>{selectedLanguage === 'pt-BR' ? 'Mudar Senha' : 'Change Password'}</DropdownItem>
+                            <DropdownItem onClick={handleSearchUsers}>{selectedLanguage === 'pt-BR' ? 'Usuários' : 'Users'}</DropdownItem>
+                            <DropdownItem onClick={handleLogout}>{selectedLanguage === 'pt-BR' ? 'Sair' : 'Logout'}</DropdownItem>
                         </DropdownMenu>
                     </UserIconContainer>
                 </IconsContainer>
             </NavbarContent>
-        </NavbarContainer >
-    )
+        </NavbarContainer>
+    );
 }
 
 export default Navbar;
