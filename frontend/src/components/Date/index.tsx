@@ -12,7 +12,7 @@ export const Date: React.FC<CustomDatePickerProps> = ({selected, onChange, place
   
   return (
     <DatePickerWrapper>
-      <label>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento' : 'Birth Date'}</label>
+      <label>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento' : selectedLanguage === 'en-US' ? 'Birth Date' : 'Geburtsdatum'}</label>
       <StyledDatePicker selected={selected} onChange={onChange} dateFormat="dd/MM/yyyy" placeholderText={placeholder} showPopperArrow={false} isClearable />
     </DatePickerWrapper>
   );

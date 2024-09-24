@@ -61,19 +61,24 @@ export const SearchUsers: React.FC = () => {
         const roleMap: { [key: string]: { [key: string]: string } } = {
             ADMIN: {
                 'pt-BR': "Administrador",
-                'en-US': "Administrator"
+                'en-US': "Administrator",
+                'de-DE': "Administrator"
             },
             INSTRUCTOR: {
                 'pt-BR': "Instrutor",
-                'en-US': "Instructor"
+                'en-US': "Instructor",
+                'de-DE': "Ausbilder"
             },
             STUDENT: {
                 'pt-BR': "Aluno",
-                'en-US': "Student"
+                'en-US': "Student",
+                'de-DE': "Student"
             }
         };
-        return roleMap[role]?.[selectedLanguage] || role; 
+    
+        return roleMap[role]?.[selectedLanguage] || role;
     };
+    
 
     return (
         <PageEnveloper>
@@ -84,8 +89,8 @@ export const SearchUsers: React.FC = () => {
                         <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0].toUpperCase()}</UserIcon>
                         <Title>{user.name}</Title>
                         <Description><b>EDV:</b> {user.edv}</Description>
-                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento: ' : 'Birth Date: '}</b>{formatDate(user.birthDate)}</Description>
-                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Cargo: ' : 'Role: '}</b>{getRoleLabel(role, selectedLanguage)}</Description>
+                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento: ' : selectedLanguage === 'en-US' ? 'Birth Date: ' : 'Geburtsdatum: '}</b>{formatDate(user.birthDate)}</Description>
+                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Cargo: ' : selectedLanguage == 'en-US' ? 'Role: ' : 'Position: '}</b>{getRoleLabel(role, selectedLanguage)}</Description>
                     </CardWrapper>
                 ))}
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />

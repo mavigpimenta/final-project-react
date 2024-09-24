@@ -17,14 +17,14 @@ export const Select: React.FC<SelectProps> = ({ label, value, onChange }) => {
       <label>{label}</label>
 
       <StyledSelect value={value} onChange={onChange}>
-        <StyledOption value="">{selectedLanguage === 'pt-BR' ? 'Selecione seu cargo' : 'Select your role'}</StyledOption>
+        <StyledOption value="">{selectedLanguage === 'pt-BR' ? 'Selecione seu cargo' : selectedLanguage === 'en-US' ? 'Select your role' : 'Wählen Sie Ihre Position aus'}</StyledOption>
         {role == "ADMIN" &&
           <>
-            <StyledOption value="ADMIN">Administrador</StyledOption>
+            <StyledOption value="ADMIN">{selectedLanguage === 'pt-BR' ? 'Administrador' : selectedLanguage === 'en-US' ? 'Administrator' : 'Administrator'}</StyledOption>
           </>
         } :
-        <StyledOption value="INSTRUCTOR">Instrutor</StyledOption>
-        <StyledOption value="STUDENT">Aluno</StyledOption>
+        <StyledOption value="INSTRUCTOR">{selectedLanguage === 'pt-BR' ? 'Instrutor' : selectedLanguage === 'en-US' ? 'Instructor' : 'Ausbilder'}</StyledOption>
+        <StyledOption value="STUDENT">{selectedLanguage === 'pt-BR' ? 'Estudante' : selectedLanguage === 'en-US' ? 'Student' : 'Student'}</StyledOption>
       </StyledSelect>
     </>
   );

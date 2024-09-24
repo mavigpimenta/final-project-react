@@ -62,11 +62,11 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
             ) : (
                 <Comment>
                     <UserIcon bgColor='#ccc'>S</UserIcon>
-                    {selectedLanguage === 'pt-BR' ? 'Não há comentários ainda.' : 'No comments yet.'}
+                    {selectedLanguage === 'pt-BR' ? 'Não há comentários ainda.' : selectedLanguage === 'en-US' ? 'No comments yet.' : 'Es liegen noch keine Kommentare vor.'}
                 </Comment>
             )}
             <SeeMorePosition>
-                <SeeMoreButton href={`/detail/${id}`}>{selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}</SeeMoreButton>
+                <SeeMoreButton href={`/detail/${id}`}>{selectedLanguage === 'pt-BR' ? 'Ver mais' : selectedLanguage === 'en-US' ? 'See more' : 'Mehr sehen'}</SeeMoreButton>
             </SeeMorePosition>
         </CardWrapper>
     )

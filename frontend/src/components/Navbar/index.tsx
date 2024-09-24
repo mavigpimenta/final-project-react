@@ -5,6 +5,7 @@ import Moon from "/Moon.svg";
 import { useNavigate } from "react-router-dom";
 import USFlag from "/USFlag.png";
 import BRFlag from "/BRFlag.png";
+import DEFlag from "/DEFlag.png";
 import { useLanguage } from "../../context/LanguageContext";
 
 const Navbar = () => {
@@ -169,7 +170,7 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         <DarkModeImage src={isDarkMode ? Moon : Sun} style={{ filter: isDarkMode ? 'invert(80%) sepia(20%) hue-rotate(190deg)' : 'none' }} />
                     </DarkModeButton>
                     <LanguageIcon onClick={toggleLanguageDropdown}>
-                        <img src={selectedLanguage === 'pt-BR' ? BRFlag : USFlag} alt="Selected Language" style={{ width: "30px", height: "30px" }} />
+                        <img src={selectedLanguage === 'pt-BR' ? BRFlag : selectedLanguage === 'en-US' ? USFlag : DEFlag} alt="Selected Language" style={{ width: "30px", height: "30px" }} />
                     </LanguageIcon>
                     {isLanguageDropdownOpen && (
                         <LanguageDropdown>
@@ -178,6 +179,9 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                             </LanguageItem>
                             <LanguageItem onClick={() => handleLanguageSelect('en-US')}>
                                 <img src={USFlag} alt="Inglês" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Inglês
+                            </LanguageItem>
+                            <LanguageItem onClick={() => handleLanguageSelect('de-DE')}>
+                                <img src={DEFlag} alt="Alemão" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Alemão
                             </LanguageItem>
                         </LanguageDropdown>
                     )}

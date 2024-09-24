@@ -18,10 +18,10 @@ export const EditForm: React.FC<EditFormProps> = ({ onSubmit, oldPassword, setOl
   
   return (
     <FormWrapper onSubmit={onSubmit}>
-      <Input label={selectedLanguage === 'pt-BR' ? 'Senha Antiga' : 'Old Password'} type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
-      <Input label={selectedLanguage === 'pt-BR' ? 'Nova Senha' : 'New Password'} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Input label={selectedLanguage === 'pt-BR' ? 'Confirmar Senha' : 'Confirm Password'} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-      <Button>{selectedLanguage === 'pt-BR' ? 'Confirmar' : 'Confirm'}</Button>
+      <Input label={selectedLanguage === 'pt-BR' ? 'Senha Antiga' : selectedLanguage === 'en-US' ? 'Old Password' : 'Altes Passwort'} type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+      <Input label={selectedLanguage === 'pt-BR' ? 'Nova Senha' : selectedLanguage === 'en-US' ? 'New Password' : 'Neues Passwort'} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <Input label={selectedLanguage === 'pt-BR' ? 'Confirmar Senha' : selectedLanguage === 'en-US' ? 'Confirm Password' : 'Passwort bestätigen'} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+      <Button>{selectedLanguage === 'pt-BR' ? 'Confirmar' : selectedLanguage === 'en-US' ? 'Confirm' : 'Bestätigen'}</Button>
     </FormWrapper>
   );
 };

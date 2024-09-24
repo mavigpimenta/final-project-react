@@ -27,12 +27,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, edv, setEd
   return (
     <FormWrapper onSubmit={onSubmit}>
       <Input label="EDV" type="text" value={edv} onChange={(e) => setEdv(e.target.value)} />
-      <Input label={selectedLanguage === 'pt-BR' ? 'Nome Completo' : 'Full Name'} type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <Input label={selectedLanguage === 'pt-BR' ? 'Nome Completo' : selectedLanguage === 'en-US' ? 'Full Name' : 'Vollständiger Name'} type="text" value={name} onChange={(e) => setName(e.target.value)} />
       <Date selected={date} onChange={(date) => setDate(date)} placeholder="DD/MM/YYYY" />
-      <Select label={selectedLanguage === 'pt-BR' ? 'Cargo' : 'Role'} value={role} onChange={(e) => setRole(e.target.value)} />
-      <Input label={selectedLanguage === 'pt-BR' ? 'Senha' : 'Password'} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Input label={selectedLanguage === 'pt-BR' ? 'Confirmar Senha' : 'Confirm Password'} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-      <Button>{selectedLanguage === 'pt-BR' ? 'Entrar' : 'Register'}</Button>
+      <Select label={selectedLanguage === 'pt-BR' ? 'Cargo' : selectedLanguage === 'en-US' ? 'Role' : 'Position'} value={role} onChange={(e) => setRole(e.target.value)} />
+      <Input label={selectedLanguage === 'pt-BR' ? 'Senha' : selectedLanguage === 'en-US' ? 'Password' : 'Passwort' } type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <Input label={selectedLanguage === 'pt-BR' ? 'Confirmar Senha' : selectedLanguage === 'en-US' ? 'Confirm Password' : 'Passwort Bestätigen'} type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+      <Button>{selectedLanguage === 'pt-BR' ? 'Registrar' : selectedLanguage === 'en-US' ? 'Register' : 'Registrieren'}</Button>
     </FormWrapper>
   );
 };
