@@ -123,6 +123,18 @@ export const CreationDetail = styled.p`
     gap: 5px;
     text-align: justify;
     font-size: 0.8rem;
+
+    @media (max-width: 375px) {
+        font-size: 0.4rem;
+    }
+
+    @media (min-width: 425px) {
+        font-size: 0.6rem;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 0.8rem;
+    }
 `;
 
 export const UserDetail = styled.div<UserIconProps>`
@@ -139,8 +151,8 @@ export const UserDetail = styled.div<UserIconProps>`
     font-size: 12px;
 
     @media (max-width: 768px) {
-        width: 30px; 
-        height: 30px;
-        font-size: 16px;
+        width: 20px; 
+        height: 20px;
+        font-size: 10px;
     }
 `;

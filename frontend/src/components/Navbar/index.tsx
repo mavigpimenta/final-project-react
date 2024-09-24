@@ -16,6 +16,7 @@ const Navbar = () => {
     const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
     const navigate = useNavigate();
     const { selectedLanguage, setLanguage } = useLanguage();
+    const role = localStorage.getItem("role");
 
     const handleLanguageSelect = (lang: string) => {
         setLanguage(lang); 
@@ -191,7 +192,9 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         <DropdownMenu isOpen={isDropdownOpen}>
                             <DropdownItem><b>{formatUserName(userName)}</b></DropdownItem>
                             <DropdownItem onClick={handleChangePassword}>{selectedLanguage === 'pt-BR' ? 'Mudar Senha' : selectedLanguage === 'en-US' ? 'Change Password' : 'Kennwort ändern'}</DropdownItem>
-                            <DropdownItem onClick={handleSearchUsers}>{selectedLanguage === 'pt-BR' ? 'Usuários' : selectedLanguage === 'en-US' ? 'Users' : 'Benutzer'}</DropdownItem>
+                            {role == "ADMIN" &&
+                                <DropdownItem onClick={handleSearchUsers}>{selectedLanguage === 'pt-BR' ? 'Usuários' : selectedLanguage === 'en-US' ? 'Users' : 'Benutzer'}</DropdownItem>
+                            }
                             <DropdownItem onClick={handleLogout}>{selectedLanguage === 'pt-BR' ? 'Sair' : selectedLanguage === 'en-US' ? 'Logout' : 'Ausgehen'}</DropdownItem>
                         </DropdownMenu>
                     </UserIconContainer>

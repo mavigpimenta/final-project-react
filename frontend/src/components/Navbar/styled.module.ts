@@ -141,7 +141,7 @@ export const LanguageDropdown = styled.div`
   background-color: var(--bg-color);
   border-radius: 5px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  width: 150px;
+  width: 170px;
   z-index: 10;
 `;
 

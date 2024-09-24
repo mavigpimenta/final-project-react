@@ -138,7 +138,7 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
             ) : (
                 <SeeMorePosition>
                     <SeeMoreButton href={`/detail/${id}`}>
-                        {selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}
+                        {selectedLanguage === 'pt-BR' ? 'Ver mais' : selectedLanguage === 'pt-BR' ? 'See more' : 'Mehr sehen'}
                     </SeeMoreButton>
                 </SeeMorePosition>
             )}
