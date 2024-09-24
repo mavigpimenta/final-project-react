@@ -120,8 +120,8 @@ export const CreationDetail = styled.p`
 `;
 
 export const UserDetail = styled.div<UserIconProps>`
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background-color: ${(props) => props.bgColor || "#ccc"};
     display: flex;
@@ -130,6 +130,7 @@ export const UserDetail = styled.div<UserIconProps>`
     font-size: 18px;
     color: #fff;
     flex-shrink: 0;
+    font-size: 12px;
 
     @media (max-width: 768px) {
         width: 30px; 

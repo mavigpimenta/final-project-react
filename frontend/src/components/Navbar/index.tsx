@@ -88,9 +88,10 @@ const Navbar = () => {
 
     const formatUserName = (name: string) => {
         const namesArray = name.split(" ");
-        const firstName = namesArray[0];
-        const lastName = namesArray[namesArray.length - 1];
-        return `${firstName} ${lastName}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const capitalizedNames = namesArray.map(part => {
+            return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+        });
+        return capitalizedNames.join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     };
 
     return (
@@ -188,7 +189,7 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                     <UserIconContainer onClick={toggleDropdown}>
                         <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
                         <DropdownMenu isOpen={isDropdownOpen}>
-                            <DropdownItem><b>{userName}</b></DropdownItem>
+                            <DropdownItem><b>{formatUserName(userName)}</b></DropdownItem>
                             <DropdownItem onClick={handleChangePassword}>{selectedLanguage === 'pt-BR' ? 'Mudar Senha' : selectedLanguage === 'en-US' ? 'Change Password' : 'Kennwort ändern'}</DropdownItem>
                             <DropdownItem onClick={handleSearchUsers}>{selectedLanguage === 'pt-BR' ? 'Usuários' : selectedLanguage === 'en-US' ? 'Users' : 'Benutzer'}</DropdownItem>
                             <DropdownItem onClick={handleLogout}>{selectedLanguage === 'pt-BR' ? 'Sair' : selectedLanguage === 'en-US' ? 'Logout' : 'Ausgehen'}</DropdownItem>

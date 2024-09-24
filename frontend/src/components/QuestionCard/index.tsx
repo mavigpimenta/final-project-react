@@ -10,7 +10,7 @@ interface CommentProps {
     userName: string;
 }
 
-const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails  }: { isDetails: boolean, title: string, children: string, comments: CommentProps[], id: string, onDelete?: () => void, onEdit?: () => void, handleSubmitNewComment?: () => void, setDescriptionComment?: (value: string) => void, descriptionComment?: string }) => {
+const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, userId, createdAt  }: { isDetails: boolean, title: string, children: string, comments: CommentProps[], id: string, onDelete?: () => void, onEdit?: () => void, handleSubmitNewComment?: () => void, setDescriptionComment?: (value: string) => void, descriptionComment?: string, userId: string, createdAt: string}) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage, setLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
@@ -78,9 +78,19 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
 
     const formatUserName = (name: string) => {
         const namesArray = name.split(" ");
-        const firstName = namesArray[0];
-        const lastName = namesArray[namesArray.length - 1];
-        return `${firstName} ${lastName}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const capitalizedNames = namesArray.map(part => {
+            return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+        });
+        return capitalizedNames.join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    };
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+        });
     };
 
     return (
@@ -95,7 +105,7 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
             <Description>{children}</Description>
             {isDetails && (
                 <CreationDetail>
-                    Criado por {}
+                    Criado por <UserDetail bgColor={bgColor}>{userInitial}</UserDetail> {formatUserName(userName)} em {formatDate(createdAt)}
                 </CreationDetail>
             )}
             <Line />
