@@ -68,6 +68,7 @@ const MainPage: React.FC = () => {
                 setTitle('');
                 setDescription('');
             }
+            getAllPosts();
         } catch (error) {
             console.error("Erro ao criar o post:", error);
             toast.error("Erro ao criar o post!");

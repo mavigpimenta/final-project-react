@@ -105,7 +105,7 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
             <Description>{children}</Description>
             {isDetails && (
                 <CreationDetail>
-                    Criado por <UserDetail bgColor={bgColor}>{userInitial}</UserDetail> {formatUserName(userName)} em {formatDate(createdAt)}
+                    {selectedLanguage === 'pt-BR' ? 'Criado por' : selectedLanguage === 'en-US' ? 'Created by' : 'Erstellt von'} <UserDetail bgColor={bgColor}>{userInitial}</UserDetail> {formatUserName(userName)} {selectedLanguage === 'pt-BR' ? 'em' : selectedLanguage === 'en-US' ? 'at' : 'am'} {formatDate(createdAt)}
                 </CreationDetail>
             )}
             <Line />

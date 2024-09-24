@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import PageEnveloper from "../../components/PageEnveloper"
 import QuestionCard from "../../components/QuestionCard";
 import axios from "axios";
@@ -24,7 +24,7 @@ const PostDetailPage = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [descriptionComment, setDescriptionComment] = useState("");
-    
+
     const getPost = async () => {
         try {
             const response = await axios.get(`http://localhost:8000/post/getById/${id}`);
@@ -34,7 +34,7 @@ const PostDetailPage = () => {
             toast.error('Erro ao carregar o post.');
         }
     };
-    
+
     const openModal = () => {
         setIsModalOpen(true);
         setTitle(post.title);
@@ -43,7 +43,7 @@ const PostDetailPage = () => {
 
     const deletePost = async () => {
         try {
-            await axios.delete(`http://localhost:8000/post/delete/${id}`,{
+            await axios.delete(`http://localhost:8000/post/delete/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
@@ -58,7 +58,7 @@ const PostDetailPage = () => {
 
     const handleSubmitEditPost = async () => {
         try {
-            await axios.patch(`http://localhost:8000/post/edit/${id}`, {
+            const response = await axios.patch(`http://localhost:8000/post/edit/${id}`, {
                 title,
                 description
             }, {
@@ -66,9 +66,12 @@ const PostDetailPage = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             });
-            setIsModalOpen(false); 
-            getPost(); 
-            toast.success("Post atualizado com sucesso.");
+
+            toast.success("Post editado com sucesso!");
+
+            setTimeout(() => {
+                getPost();
+            }, 10000);
         } catch (error) {
             console.error("Erro ao atualizar o post:", error);
             toast.error('Erro ao atualizar o post.');
@@ -91,31 +94,32 @@ const PostDetailPage = () => {
                 }
             });
 
-            setDescriptionComment(""); 
-            getPost(); 
+            setDescriptionComment("");
+            getPost();
             toast.success("Comentário adicionado com sucesso.");
         } catch (error) {
             console.error("Erro ao adicionar o comentário:", error);
             toast.error('Erro ao adicionar o comentário.');
         }
     };
-    
+
     useEffect(() => {
         getPost();
     }, [id]);
 
     if (!post) {
-        return <div>Carregando...</div>; 
+        return <div>Carregando...</div>;
     }
 
     return (
         <>
+            <ToastContainer />
             <PageEnveloper>
                 <QuestionCard isDetails={true} onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} userId={post.userId.name}
-                createdAt={post.createdAt} comments={post.comments.map(comment => ({
-                    description: comment.description,
-                    userName: comment.userId?.name || 'Anônimo'
-                }))}>
+                    createdAt={post.createdAt} comments={post.comments.map(comment => ({
+                        description: comment.description,
+                        userName: comment.userId?.name || 'Anônimo'
+                    }))}>
                     {(post.description)}
                 </QuestionCard>
             </PageEnveloper>
