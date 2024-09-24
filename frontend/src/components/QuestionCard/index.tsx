@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CardWrapper, Comment, CommentWrapper, Description, Header, InputContainer, Line, SeeMoreButton, SeeMorePosition, StyledIcon, Title, UserIcon } from "./styled.module";
+import { CardWrapper, Comment, CommentWrapper, CreationDetail, Description, Header, InputContainer, Line, SeeMoreButton, SeeMorePosition, StyledIcon, Title, UserDetail, UserIcon } from "./styled.module";
 import { useLanguage } from "../../context/LanguageContext";
 import Delete from "/Delete.svg";
 import Edit from "/Edit.svg";
@@ -93,6 +93,11 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
             )}
             <Title>{title}</Title>
             <Description>{children}</Description>
+            {isDetails && (
+                <CreationDetail>
+                    Criado por {}
+                </CreationDetail>
+            )}
             <Line />
             {comments && comments.length > 0 ? (
                 comments.map((comment, index) => (

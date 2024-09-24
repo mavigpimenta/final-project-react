@@ -36,6 +36,7 @@ export const Title = styled.div`
 export const StyledIcon = styled.img`
     width: 25px;
     height: 25px;
+    cursor: pointer;
 `
 
 export const Description = styled.p`
@@ -108,4 +109,31 @@ export const InputContainer = styled.div`
     width: 100%;
     display: flex;
     gap: 5px;
+`;
+
+export const CreationDetail = styled.p`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-align: justify;
+    font-size: 0.8rem;
+`;
+
+export const UserDetail = styled.div<UserIconProps>`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: ${(props) => props.bgColor || "#ccc"};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+        width: 30px; 
+        height: 30px;
+        font-size: 16px;
+    }
 `;
