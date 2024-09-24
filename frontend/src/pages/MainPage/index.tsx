@@ -86,7 +86,7 @@ const MainPage: React.FC = () => {
                 <Search title={titleSearch} setTitle={setTitleSearch} />
                 {posts && posts.map((post) => (
                     post && post.title ? (
-                        <QuestionCard id={post._id} key={post._id} title={post.title} comments={post.comments.map(comment => ({
+                        <QuestionCard isDetails={false} id={post._id} key={post._id} title={post.title} comments={post.comments.map(comment => ({
                             description: comment.description,
                             userName: comment.userId?.name || 'Anônimo'
                         }))}>

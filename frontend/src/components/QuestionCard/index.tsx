@@ -10,7 +10,7 @@ interface CommentProps {
     userName: string;
 }
 
-const QuestionCard = ({ title, children, comments, id }: { title: string, children: string, comments: CommentProps[], id: string}) => {
+const QuestionCard = ({ title, children, comments, id, isDetails }: { title: string, children: string, comments: CommentProps[], id: string, isDetails: boolean }) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage, setLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
@@ -24,9 +24,9 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
 
     useEffect(() => {
         comments.forEach((comment) => {
-            const storedColor = localStorage.getItem(comment.userName); 
+            const storedColor = localStorage.getItem(comment.userName);
             if (!storedColor) {
-                const newColor = generateColorForUser(comment.userName); 
+                const newColor = generateColorForUser(comment.userName);
                 localStorage.setItem(comment.userName, newColor);
                 setUserColors((prevColors) => ({
                     ...prevColors,
@@ -67,8 +67,8 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
     };
 
     const truncateDescription = (description: string) => {
-        return description.length > 64 
-            ? description.slice(0, 64) + "..." 
+        return description.length > 64
+            ? description.slice(0, 64) + "..."
             : description;
     };
 
@@ -90,20 +90,22 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
 
     return (
         <CardWrapper>
-            <Header>
-                <StyledIcon src={Delete} />
-                <StyledIcon src={Edit} />
-            </Header>
+            {isDetails && (
+                <Header>
+                    <StyledIcon src={Delete} />
+                    <StyledIcon src={Edit} />
+                </Header>
+            )}
             <Title>{title}</Title>
             <Description>{children}</Description>
             <Line />
             {comments && comments.length > 0 ? (
                 comments.map((comment, index) => (
                     <CommentWrapper>
-                    <Comment key={index}>
-                        <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>{comment.userName.charAt(0).toUpperCase()}</UserIcon>
-                        {truncateDescription(comment.description)}
-                    </Comment>
+                        <Comment key={index}>
+                            <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>{comment.userName.charAt(0).toUpperCase()}</UserIcon>
+                            {truncateDescription(comment.description)}
+                        </Comment>
                     </CommentWrapper>
                 ))
             ) : (
@@ -112,14 +114,18 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
                     {selectedLanguage === 'pt-BR' ? 'Não há comentários ainda.' : 'No comments yet.'}
                 </Comment>
             )}
-            <InputContainer>
-                <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
-                <CommentInput onSubmit={handleSubmitNewComment} description={descriptionComment} setDescription={setDescriptionComment} />
-            </InputContainer>
-
-            <SeeMorePosition>
-                <SeeMoreButton href={`/detail/${id}`}>{selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}</SeeMoreButton>
-            </SeeMorePosition>
+            {isDetails ? (
+                <InputContainer>
+                    <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
+                    <CommentInput onSubmit={handleSubmitNewComment} description={descriptionComment} setDescription={setDescriptionComment} />
+                </InputContainer>
+            ) : (
+                <SeeMorePosition>
+                    <SeeMoreButton href={`/detail/${id}`}>
+                        {selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}
+                    </SeeMoreButton>
+                </SeeMorePosition>
+            )}
         </CardWrapper>
     )
 }

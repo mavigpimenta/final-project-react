@@ -36,7 +36,7 @@ const PostDetailPage = () => {
 
     return (
         <PageEnveloper>
-            <QuestionCard id={post._id} key={post._id} title={post.title} comments={post.comments.map(comment => ({
+            <QuestionCard isDetails={true} id={post._id} key={post._id} title={post.title} comments={post.comments.map(comment => ({
                 description: comment.description,
                 userName: comment.userId?.name || 'Anônimo'
             }))}>
