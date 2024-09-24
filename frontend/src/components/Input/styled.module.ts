@@ -4,6 +4,7 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  width: 100%;
 
   @media (max-width: 768px) {
     margin-bottom: 0.75rem;

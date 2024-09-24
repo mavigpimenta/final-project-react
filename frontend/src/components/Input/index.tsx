@@ -1,7 +1,7 @@
 import { InputWrapper, StyledInput } from "./styled.module";
 
 interface InputProps {
-  label: string;
+  label?: string;
   type: string;
   value: string;
   placeholder?: string;

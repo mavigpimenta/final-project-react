@@ -25,7 +25,7 @@ export const CardWrapper = styled.div`
 export const Header = styled.div`
     display: flex;
     justify-content: end;
-    gap: 10px
+    gap: 10px;
 `
 
 export const Title = styled.div`
@@ -104,3 +104,8 @@ export const UserIcon = styled.div<UserIconProps>`
     }
 `;
 
+export const InputContainer = styled.div`
+    width: 100%;
+    display: flex;
+    gap: 5px;
+`;

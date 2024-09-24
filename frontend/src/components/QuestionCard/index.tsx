@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { CardWrapper, Comment, CommentWrapper, Description, Line, SeeMoreButton, SeeMorePosition, Title, UserIcon } from "./styled.module";
+import { CardWrapper, Comment, CommentWrapper, Description, Header, InputContainer, Line, SeeMoreButton, SeeMorePosition, StyledIcon, Title, UserIcon } from "./styled.module";
 import { useLanguage } from "../../context/LanguageContext";
+import Delete from "/Delete.svg";
+import Edit from "/Edit.svg";
+import CommentInput from "../CommentInput";
 
 interface CommentProps {
     description: string;
@@ -10,6 +13,14 @@ interface CommentProps {
 const QuestionCard = ({ title, children, comments, id }: { title: string, children: string, comments: CommentProps[], id: string}) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage, setLanguage } = useLanguage();
+    const [bgColor, setBgColor] = useState("#ccc");
+    const [userInitial, setUserInitial] = useState("U");
+    const [userName, setUserName] = useState("Usuário");
+    const [descriptionComment, setDescriptionComment] = useState("");
+
+    const handleSubmitNewComment = () => {
+        console.log("oba");
+    }
 
     useEffect(() => {
         comments.forEach((comment) => {
@@ -30,6 +41,22 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
         });
     }, [comments]);
 
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('name') || "Usuário";
+        const storedBgColor = localStorage.getItem(`${storedUserName}-color`);
+
+        setUserName(formatUserName(storedUserName));
+        setUserInitial(storedUserName.charAt(0).toUpperCase());
+
+        if (storedBgColor) {
+            setBgColor(storedBgColor);
+        } else {
+            const newColor = getRandomColor();
+            localStorage.setItem(`${storedUserName}-color`, newColor);
+            setBgColor(newColor);
+        }
+    }, []);
+
     const generateColorForUser = (userName: string) => {
         const letters = "0123456789ABCDEF";
         let color = "#";
@@ -43,6 +70,22 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
         return description.length > 64 
             ? description.slice(0, 64) + "..." 
             : description;
+    };
+
+    const getRandomColor = () => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
+
+    const formatUserName = (name: string) => {
+        const namesArray = name.split(" ");
+        const firstName = namesArray[0];
+        const lastName = namesArray[namesArray.length - 1];
+        return `${firstName} ${lastName}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     };
 
     return (
@@ -69,10 +112,11 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
                     {selectedLanguage === 'pt-BR' ? 'Não há comentários ainda.' : 'No comments yet.'}
                 </Comment>
             )}
-            <SeeMorePosition>
-                <SeeMoreButton href={`/detail/${id}`}>{selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}</SeeMoreButton>
-            </SeeMorePosition>
-            
+            <InputContainer>
+                <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
+                <CommentInput onSubmit={handleSubmitNewComment} description={descriptionComment} setDescription={setDescriptionComment} />
+            </InputContainer>
+
             <SeeMorePosition>
                 <SeeMoreButton href={`/detail/${id}`}>{selectedLanguage === 'pt-BR' ? 'Ver mais' : 'See more'}</SeeMoreButton>
             </SeeMorePosition>
