@@ -22,11 +22,21 @@ export const CardWrapper = styled.div`
     }
 `;
 
-export const Title = styled.p`
-    font-size: 2rem; 
+export const Header = styled.div`
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+`
+
+export const Title = styled.div`
+    font-size: 2rem;
     font-weight: bold;
-    margin: 0;
 `;
+
+export const StyledIcon = styled.img`
+    width: 25px;
+    height: 25px;
+`
 
 export const Description = styled.p`
     text-align: justify;
@@ -92,4 +102,10 @@ export const UserIcon = styled.div<UserIconProps>`
         height: 30px;
         font-size: 16px;
     }
+`;
+
+export const InputContainer = styled.div`
+    width: 100%;
+    display: flex;
+    gap: 5px;
 `;
