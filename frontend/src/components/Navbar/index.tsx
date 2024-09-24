@@ -175,13 +175,13 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                     {isLanguageDropdownOpen && (
                         <LanguageDropdown>
                             <LanguageItem onClick={() => handleLanguageSelect('pt-BR')}>
-                                <img src={BRFlag} alt="Português" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Português
+                                <img src={BRFlag} alt="Português" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> {selectedLanguage === 'pt-BR' ? 'Português' : selectedLanguage === 'en-US' ? 'Portuguese' : 'Portugiesisch'}
                             </LanguageItem>
                             <LanguageItem onClick={() => handleLanguageSelect('en-US')}>
-                                <img src={USFlag} alt="Inglês" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Inglês
+                                <img src={USFlag} alt="Inglês" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> {selectedLanguage === 'pt-BR' ? 'Inglês' : selectedLanguage === 'en-US' ? 'English' : 'Englisch'}
                             </LanguageItem>
                             <LanguageItem onClick={() => handleLanguageSelect('de-DE')}>
-                                <img src={DEFlag} alt="Alemão" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> Alemão
+                                <img src={DEFlag} alt="Alemão" style={{ width: "30px", height: "30px", marginRight: "10px" }} /> {selectedLanguage === 'pt-BR' ? 'Alemão' : selectedLanguage === 'en-US' ? 'German' : 'Deutsch'}
                             </LanguageItem>
                         </LanguageDropdown>
                     )}
@@ -189,9 +189,9 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
                         <DropdownMenu isOpen={isDropdownOpen}>
                             <DropdownItem><b>{userName}</b></DropdownItem>
-                            <DropdownItem onClick={handleChangePassword}>{selectedLanguage === 'pt-BR' ? 'Mudar Senha' : 'Change Password'}</DropdownItem>
-                            <DropdownItem onClick={handleSearchUsers}>{selectedLanguage === 'pt-BR' ? 'Usuários' : 'Users'}</DropdownItem>
-                            <DropdownItem onClick={handleLogout}>{selectedLanguage === 'pt-BR' ? 'Sair' : 'Logout'}</DropdownItem>
+                            <DropdownItem onClick={handleChangePassword}>{selectedLanguage === 'pt-BR' ? 'Mudar Senha' : selectedLanguage === 'en-US' ? 'Change Password' : 'Kennwort ändern'}</DropdownItem>
+                            <DropdownItem onClick={handleSearchUsers}>{selectedLanguage === 'pt-BR' ? 'Usuários' : selectedLanguage === 'en-US' ? 'Users' : 'Benutzer'}</DropdownItem>
+                            <DropdownItem onClick={handleLogout}>{selectedLanguage === 'pt-BR' ? 'Sair' : selectedLanguage === 'en-US' ? 'Logout' : 'Ausgehen'}</DropdownItem>
                         </DropdownMenu>
                     </UserIconContainer>
                 </IconsContainer>
