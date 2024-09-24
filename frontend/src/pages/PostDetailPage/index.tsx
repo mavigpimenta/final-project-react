@@ -21,6 +21,7 @@ const PostDetailPage = () => {
     const closeModal = () => setIsModalOpen(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [descriptionComment, setDescriptionComment] = useState("");
     
     const getPost = async () => {
         try {
@@ -71,6 +72,31 @@ const PostDetailPage = () => {
             toast.error('Erro ao atualizar o post.');
         }
     };
+
+    const handleSubmitNewComment = async () => {
+        if (!descriptionComment) {
+            toast.error("O comentário não pode estar vazio.");
+            return;
+        }
+
+        try {
+            await axios.post(`http://localhost:8000/comment/create`, {
+                postId: id,
+                description: descriptionComment,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+
+            setDescriptionComment(""); 
+            getPost(); 
+            toast.success("Comentário adicionado com sucesso.");
+        } catch (error) {
+            console.error("Erro ao adicionar o comentário:", error);
+            toast.error('Erro ao adicionar o comentário.');
+        }
+    };
     
     useEffect(() => {
         getPost();
@@ -83,7 +109,7 @@ const PostDetailPage = () => {
     return (
         <>
             <PageEnveloper>
-                <QuestionCard onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} comments={post.comments.map(comment => ({
+                <QuestionCard onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} comments={post.comments.map(comment => ({
                     description: comment.description,
                     userName: comment.userId?.name || 'Anônimo'
                 }))}>

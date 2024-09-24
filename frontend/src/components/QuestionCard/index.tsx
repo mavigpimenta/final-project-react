@@ -10,17 +10,12 @@ interface CommentProps {
     userName: string;
 }
 
-const QuestionCard = ({ title, children, comments, id, onDelete, onEdit  }: { title: string, children: string, comments: CommentProps[], id: string, onDelete: () => void, onEdit: () => void }) => {
+const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment  }: { title: string, children: string, comments: CommentProps[], id: string, onDelete: () => void, onEdit: () => void, handleSubmitNewComment: () => void, setDescriptionComment: (value: string) => void, descriptionComment: string }) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage, setLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
     const [userInitial, setUserInitial] = useState("U");
     const [userName, setUserName] = useState("Usuário");
-    const [descriptionComment, setDescriptionComment] = useState("");
-
-    const handleSubmitNewComment = () => {
-        console.log("oba");
-    }
 
     useEffect(() => {
         comments.forEach((comment) => {

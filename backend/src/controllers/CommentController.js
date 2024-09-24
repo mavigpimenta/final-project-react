@@ -4,8 +4,7 @@ const { Post } = require('../models/post');
 
 class CommentController {
     static async create(req, res) {
-        const { description } = req.body;
-        const { postId } = req.query;
+        const { postId, description } = req.body;
         
         if (!description || !postId) {
             return res.status(400).send({ message: "PostId and description are required." });
