@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { CardWrapper, Comment, CommentWrapper, Description, Line, SeeMoreButton, SeeMorePosition, Title, UserIcon } from "./styled.module";
+import { CardWrapper, Comment, CommentWrapper, Description, Header, Line, SeeMoreButton, SeeMorePosition, StyledIcon, Title, UserIcon } from "./styled.module";
+import Delete from "/Delete.svg";
+import Edit from "/Edit.svg";
 
 interface CommentProps {
     description: string;
@@ -45,6 +47,10 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
 
     return (
         <CardWrapper>
+            <Header>
+                <StyledIcon src={Delete} />
+                <StyledIcon src={Edit} />
+            </Header>
             <Title>{title}</Title>
             <Description>{children}</Description>
             <Line />
@@ -63,6 +69,10 @@ const QuestionCard = ({ title, children, comments, id }: { title: string, childr
                     Não há comentários ainda.
                 </Comment>
             )}
+            <SeeMorePosition>
+                <SeeMoreButton href={`/detail/${id}`}>Ver mais</SeeMoreButton>
+            </SeeMorePosition>
+            
             <SeeMorePosition>
                 <SeeMoreButton href={`/detail/${id}`}>Ver mais</SeeMoreButton>
             </SeeMorePosition>
