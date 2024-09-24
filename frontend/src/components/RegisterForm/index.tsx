@@ -26,7 +26,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, edv, setEd
       <Input label="EDV" type="text" value={edv} onChange={(e) => setEdv(e.target.value)} />
       <Input label="Nome completo" type="text" value={name} onChange={(e) => setName(e.target.value)} />
       <Date selected={date} onChange={(date) => setDate(date)} placeholder="DD/MM/YYYY" />
-      <Select label="Função" value={role} onChange={(e) => setRole(e.target.value)} />
+      <Select label="Cargo" value={role} onChange={(e) => setRole(e.target.value)} />
       <Input label="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <Input label="Confirmar Senha" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       <Button>Entrar</Button>
