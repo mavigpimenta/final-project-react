@@ -7,7 +7,6 @@ import { AddButton, PageWrapper, PostCreator, PostCreatorIcon } from "./styled.m
 import { ModalNewPost } from "../../components/ModalNewPost";
 import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
-import { getTime } from "react-datepicker/dist/date_utils";
 
 interface Post {
     _id: string;
