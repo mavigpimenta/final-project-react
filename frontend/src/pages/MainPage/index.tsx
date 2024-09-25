@@ -7,6 +7,7 @@ import { AddButton, PageWrapper, PostCreator, PostCreatorIcon } from "./styled.m
 import { ModalNewPost } from "../../components/ModalNewPost";
 import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
+import { getTime } from "react-datepicker/dist/date_utils";
 
 interface Post {
     _id: string;
@@ -118,7 +119,7 @@ const MainPage: React.FC = () => {
                 {posts && posts.map((post) => (
                     post && post.title ? (
                         <PostCreator key={post._id}>
-                            <PostCreatorIcon bgColor={userColors[post.comments[0]?.userId?.name] || "#ccc"}>{post.userId?.name.charAt(0).toUpperCase()}</PostCreatorIcon>
+                            <PostCreatorIcon bgColor={localStorage.getItem(post.userId.name) || "#ccc"}>{post.userId?.name.charAt(0).toUpperCase()}</PostCreatorIcon>
                             <QuestionCard isDetails={false} id={post._id} title={post.title} comments={post.comments.map(comment => ({
                                 description: comment.description,
                                 userName: comment.userId?.name || 'Anônimo'
