@@ -10,17 +10,17 @@ import { useLanguage } from "../../context/LanguageContext";
 
 const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [bgColor, setBgColor] = useState("#ccc");
     const [userInitial, setUserInitial] = useState("U");
     const [userName, setUserName] = useState("Usuário");
     const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
     const navigate = useNavigate();
     const { selectedLanguage, setLanguage } = useLanguage();
     const role = localStorage.getItem("role");
+    const [userColors, setUserColors] = useState("#ccc");
 
     const handleLanguageSelect = (lang: string) => {
-        setLanguage(lang); 
-        setIsLanguageDropdownOpen(false); 
+        setLanguage(lang);
+        setIsLanguageDropdownOpen(false);
     };
 
     const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -35,19 +35,32 @@ const Navbar = () => {
 
     useEffect(() => {
         const storedUserName = localStorage.getItem('name') || "Usuário";
-        const storedBgColor = localStorage.getItem(`${storedUserName}-color`);
 
         setUserName(formatUserName(storedUserName));
         setUserInitial(storedUserName.charAt(0).toUpperCase());
+    }, []);
 
-        if (storedBgColor) {
-            setBgColor(storedBgColor);
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('name') || "Usuário";
+        const storedColor = localStorage.getItem(`${storedUserName}`);
+
+        if (storedColor) {
+            setUserColors(storedColor);
         } else {
-            const newColor = getRandomColor();
-            localStorage.setItem(`${storedUserName}-color`, newColor);
-            setBgColor(newColor);
+            const newColor = generateColorForUser(storedUserName);
+            localStorage.setItem(`${storedUserName}`, newColor);
+            setUserColors(newColor);
         }
     }, []);
+
+    const generateColorForUser = (userName: string) => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
 
     const toggleDarkMode = () => {
         setIsDarkMode((prevMode) => !prevMode);
@@ -76,15 +89,6 @@ const Navbar = () => {
 
     const toggleLanguageDropdown = () => {
         setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
-    };
-
-    const getRandomColor = () => {
-        const letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
     };
 
     const formatUserName = (name: string) => {
@@ -189,7 +193,7 @@ l61 -48 169 164 170 164 -69 65 c-158 147 -336 231 -561 263 -94 13 -263 11
                         </LanguageDropdown>
                     )}
                     <UserIconContainer onClick={toggleDropdown}>
-                        <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
+                        <UserIcon bgColor={userColors}>{userInitial}</UserIcon>
                         <DropdownMenu isOpen={isDropdownOpen}>
                             <DropdownItem><b>{formatUserName(userName)}</b></DropdownItem>
                             <DropdownItem onClick={handleChangePassword}>{selectedLanguage === 'pt-BR' ? 'Mudar Senha' : selectedLanguage === 'en-US' ? 'Change Password' : 'Kennwort ändern'}</DropdownItem>

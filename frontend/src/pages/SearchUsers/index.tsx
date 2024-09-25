@@ -43,6 +43,7 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
             setTokenData(decodedToken);
         }
     }, []);
+    const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
 
     const fetchUsers = async () => {
         try {
@@ -62,9 +63,31 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
         fetchUsers();
     }, [currentPage, searchTerm]);
 
-    const generateColorForUser = (userName: string): string => {
-        const hash = [...userName].reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const color = `hsl(${hash % 360}, 70%, 60%)`;
+    useEffect(() => {
+        users.forEach((user) => {
+            const storedColor = localStorage.getItem(user.name);
+            if (!storedColor) {
+                const newColor = generateColorForUser(user.name);
+                localStorage.setItem(user.name, newColor);
+                setUserColors((prevColors) => ({
+                    ...prevColors,
+                    [user.name]: newColor
+                }));
+            } else {
+                setUserColors((prevColors) => ({
+                    ...prevColors,
+                    [user.name]: storedColor
+                }));
+            }
+        });
+    }, [users]);
+
+    const generateColorForUser = (userName: string) => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
         return color;
     };
 
@@ -117,27 +140,25 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
 
 
     return (
-        <>
-            <PageEnveloper>
-                <PageWrapper>
-                    <Search title={searchTerm} setTitle={setSearchTerm} />
-                    {users.map((user) => (
-                        <CardWrapper key={user._id}>
-                            <Header>
-                                <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0].toUpperCase()}</UserIcon>
-                                <IconWrapper>
-                                    <StyledIcon src={Delete} onClick={() => handleDelete(user._id)} />
-                                </IconWrapper>
-                            </Header>
-                            <Title>{user.name}</Title>
-                            <Description><b>EDV:</b> {user.edv}</Description>
-                            <Description><b>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento: ' : selectedLanguage === 'en-US' ? 'Birth Date: ' : 'Geburtsdatum: '}</b>{formatDate(user.birthDate)}</Description>
-                            <Description><b>{selectedLanguage === 'pt-BR' ? 'Cargo: ' : selectedLanguage == 'en-US' ? 'Role: ' : 'Position: '}</b>{getRoleLabel(role, selectedLanguage)}</Description>
-                        </CardWrapper>
-                    ))}
-                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-                </PageWrapper>
-            </PageEnveloper>
-        </>
+        <PageEnveloper>
+            <PageWrapper>
+                <Search title={searchTerm} setTitle={setSearchTerm} />
+                {users.map((user) => (
+                    <CardWrapper key={user._id}>
+                        <Header>
+                            <UserIcon bgColor={userColors[user.name] || "#ccc"}>{user.name.charAt(0).toUpperCase()}</UserIcon>
+                            <IconWrapper>
+                                <StyledIcon src={Delete} onClick={onDelete} />
+                            </IconWrapper>
+                        </Header>
+                        <Title>{user.name}</Title>
+                        <Description><b>EDV:</b> {user.edv}</Description>
+                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento: ' : selectedLanguage === 'en-US' ? 'Birth Date: ' : 'Geburtsdatum: '}</b>{formatDate(user.birthDate)}</Description>
+                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Cargo: ' : selectedLanguage == 'en-US' ? 'Role: ' : 'Position: '}</b>{getRoleLabel(role, selectedLanguage)}</Description>
+                    </CardWrapper>
+                ))}
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+            </PageWrapper>
+        </PageEnveloper>
     );
 };
