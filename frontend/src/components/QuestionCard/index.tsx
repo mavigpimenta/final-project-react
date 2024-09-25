@@ -19,7 +19,7 @@ interface TokenData {
 }
 
 const QuestionCard = ({
-    title, children, comments, id, userId, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, createdAt, openEditCommentModal, handleDeleteComment, }: { isDetails: boolean; title: string; children: string; comments: CommentProps[]; id: string; onDelete?: () => void; onEdit?: () => void; handleSubmitNewComment?: () => void; setDescriptionComment?: (value: string) => void; userId: string; descriptionComment?: string; createdAt: string; openEditCommentModal?: (commentId: string, currentDescription: string) => void; handleDeleteComment?: (commentId: string) => void; }) => {
+    title, children, comments, id, userId, userIdPost, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, createdAt, openEditCommentModal, handleDeleteComment, }: { isDetails: boolean; title: string; children: string; comments: CommentProps[]; id: string; onDelete?: () => void; onEdit?: () => void; handleSubmitNewComment?: () => void; setDescriptionComment?: (value: string) => void; userId: string; descriptionComment?: string; createdAt: string; userIdPost: string; openEditCommentModal?: (commentId: string, currentDescription: string) => void; handleDeleteComment?: (commentId: string) => void; }) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
@@ -131,7 +131,7 @@ const QuestionCard = ({
             {isDetails && (
                 <CreationDetail>
                     {selectedLanguage === 'pt-BR' ? 'Criado por' : selectedLanguage === 'en-US' ? 'Created by' : 'Erstellt von'} 
-                    <UserDetail bgColor={bgColor}>{userInitial}</UserDetail> {formatUserName(userName)} 
+                    <UserDetail bgColor={localStorage.getItem(userIdPost) || '#ccc'}>{userIdPost.charAt(0).toUpperCase()}</UserDetail> {formatUserName(userIdPost)} 
                     {selectedLanguage === 'pt-BR' ? ' em' : selectedLanguage === 'en-US' ? ' at' : ' am'} {formatDate(createdAt)}
                 </CreationDetail>
             )}
