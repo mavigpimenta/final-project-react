@@ -132,7 +132,7 @@ const QuestionCard = ({
                 <CreationDetail>
                     {selectedLanguage === 'pt-BR' ? 'Criado por' : selectedLanguage === 'en-US' ? 'Created by' : 'Erstellt von'} 
                     <UserDetail bgColor={bgColor}>{userInitial}</UserDetail> {formatUserName(userName)} 
-                    {selectedLanguage === 'pt-BR' ? 'em' : selectedLanguage === 'en-US' ? 'at' : 'am'} {formatDate(createdAt)}
+                    {selectedLanguage === 'pt-BR' ? ' em' : selectedLanguage === 'en-US' ? ' at' : ' am'} {formatDate(createdAt)}
                 </CreationDetail>
             )}
             <Line />
