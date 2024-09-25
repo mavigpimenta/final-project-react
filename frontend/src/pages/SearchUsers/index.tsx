@@ -8,10 +8,7 @@ import Search from "../../components/Search";
 import { Header, IconWrapper, PageWrapper, StyledIcon } from "./styled.module";
 import { useLanguage } from "../../context/LanguageContext";
 import Delete from "/Delete.svg";
-import Edit from "/Edit.svg";
 import { jwtDecode } from "jwt-decode";
-import { ModalEditUser } from "../../components/ModalEditUser";
-import { useNavigate } from "react-router-dom";
 
 interface User {
     _id: string;
