@@ -38,7 +38,6 @@ export const AddButton = styled.button`
 export const PostCreator = styled.div`
   position: relative;
   margin-bottom: 20px;
-  width: 80%;
 `;
 
 export const PostCreatorIcon = styled.div<UserIconProps>`
@@ -46,6 +45,7 @@ export const PostCreatorIcon = styled.div<UserIconProps>`
   height: 35px;
   position: absolute;
   top: 10px;
+  left: -20px;   
   border-radius: 50%;
   background-color: ${(props) => props.bgColor || "#ccc"};
   display: flex;
@@ -55,25 +55,7 @@ export const PostCreatorIcon = styled.div<UserIconProps>`
   color: #fff;
   flex-shrink: 0;
 
-  @media (max-width: 768px) {
-      width: 30px; 
-      height: 30px;
-      font-size: 16px;
-  }
-
-  @media (min-width: 320px) {
-    left: -25px;
-  }
-
-  @media (min-width: 758px) {
-    left: 0px;
-  }
-
-  @media (min-width: 1024px) {
-    left: 40px; 
-  }
-
-  @media (min-width: 1430px) {
-    left: 380px;
+  @media (max-width: 692px) {
+    left: 5px;
   }
 `;
