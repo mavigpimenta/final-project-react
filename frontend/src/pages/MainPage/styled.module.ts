@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface UserIconProps {
+  bgColor: string;
+}
+
 export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,5 +32,32 @@ export const AddButton = styled.button`
 
   &:hover {
     background-color: #005A87;
+  }
+`;
+
+export const PostCreator = styled.div`
+  position: relative;
+  margin-bottom: 20px;
+`;
+
+export const PostCreatorIcon = styled.div<UserIconProps>`
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 10px;
+  left: -20px;
+  border-radius: 50%;
+  background-color: ${(props) => props.bgColor || "#ccc"};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+      width: 30px; 
+      height: 30px;
+      font-size: 16px;
   }
 `;

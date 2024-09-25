@@ -26,6 +26,7 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
     const [searchTerm, setSearchTerm] = useState("");
     const { selectedLanguage, setLanguage } = useLanguage();
     const role = localStorage.getItem("role");
+    const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
 
     const fetchUsers = async () => {
         try {
@@ -45,9 +46,31 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
         fetchUsers();
     }, [currentPage, searchTerm]);
 
-    const generateColorForUser = (userName: string): string => {
-        const hash = [...userName].reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const color = `hsl(${hash % 360}, 70%, 60%)`; 
+    useEffect(() => {
+        users.forEach((user) => {
+            const storedColor = localStorage.getItem(user.name);
+            if (!storedColor) {
+                const newColor = generateColorForUser(user.name);
+                localStorage.setItem(user.name, newColor);
+                setUserColors((prevColors) => ({
+                    ...prevColors,
+                    [user.name]: newColor
+                }));
+            } else {
+                setUserColors((prevColors) => ({
+                    ...prevColors,
+                    [user.name]: storedColor
+                }));
+            }
+        });
+    }, [users]);
+
+    const generateColorForUser = (userName: string) => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
         return color;
     };
 
@@ -89,7 +112,7 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
                 {users.map((user) => (
                     <CardWrapper key={user._id}>
                         <Header>
-                            <UserIcon bgColor={generateColorForUser(user.name)}>{user.name[0].toUpperCase()}</UserIcon>
+                            <UserIcon bgColor={userColors[user.name] || "#ccc"}>{user.name.charAt(0).toUpperCase()}</UserIcon>
                             <IconWrapper>
                                 <StyledIcon src={Delete} onClick={onDelete} />
                                 <StyledIcon src={Edit} onClick={onEdit} />
