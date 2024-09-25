@@ -93,7 +93,6 @@ const MainPage: React.FC = () => {
 
             if (response.status === 201) {
                 toast.success("Post criado com sucesso!");
-                setPosts((prevPosts) => [...prevPosts, response.data.post]);
                 closeModal();
                 setTitle('');
                 setDescription('');
