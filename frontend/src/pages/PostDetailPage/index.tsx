@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import PageEnveloper from "../../components/PageEnveloper"
+import PageEnveloper from "../../components/PageEnveloper";
 import QuestionCard from "../../components/QuestionCard";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { ModalNewPost } from "../../components/ModalNewPost";
+import { ModalEditComment } from "../../components/ModalEditComment";
 
 interface Post {
     _id: string;
     title: string;
     description: string;
-    comments: { description: string, userId: { name: string } }[];
+    comments: { description: string, userId: { name: string }, _id: string }[];
     userId: string;
     createdAt: string;
 }
@@ -20,10 +21,12 @@ const PostDetailPage = () => {
     const [post, setPost] = useState<Post | undefined>(undefined);
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const closeModal = () => setIsModalOpen(false);
+    const [isModalCommentOpen, setIsModalCommentOpen] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [descriptionComment, setDescriptionComment] = useState("");
+    const [commentIdToEdit, setCommentIdToEdit] = useState<string | null>(null);
+    const [commentDescriptionToEdit, setCommentDescriptionToEdit] = useState("");
 
     const getPost = async () => {
         try {
@@ -35,11 +38,33 @@ const PostDetailPage = () => {
         }
     };
 
+    useEffect(() => {
+        getPost();
+    }, [id]);
+
+    if (!post) {
+        return <div>Carregando...</div>;
+    }
+
     const openModal = () => {
         setIsModalOpen(true);
         setTitle(post.title);
-        setDescription(post.description)
-    }
+        setDescription(post.description);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const openEditCommentModal = (commentId: string, currentDescription: string) => {
+        setCommentIdToEdit(commentId);
+        setCommentDescriptionToEdit(currentDescription);
+        setIsModalCommentOpen(true);
+    };
+
+    const closeEditCommentModal = () => {
+        setIsModalCommentOpen(false);
+    };
 
     const deletePost = async () => {
         try {
@@ -58,7 +83,7 @@ const PostDetailPage = () => {
 
     const handleSubmitEditPost = async () => {
         try {
-            const response = await axios.patch(`http://localhost:8000/post/edit/${id}`, {
+            await axios.patch(`http://localhost:8000/post/edit/${id}`, {
                 title,
                 description
             }, {
@@ -66,12 +91,9 @@ const PostDetailPage = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 }
             });
-
             toast.success("Post editado com sucesso!");
-
-            setTimeout(() => {
-                getPost();
-            }, 10000);
+            getPost();
+            closeModal(); 
         } catch (error) {
             console.error("Erro ao atualizar o post:", error);
             toast.error('Erro ao atualizar o post.');
@@ -103,29 +125,54 @@ const PostDetailPage = () => {
         }
     };
 
-    useEffect(() => {
-        getPost();
-    }, [id]);
+    const handleSubmitEditComment = async () => {
+        try {
+            await axios.patch(`http://localhost:8000/comment/edit/${commentIdToEdit}`, {
+                description: commentDescriptionToEdit
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+            toast.success("Comentário editado com sucesso!");
+            closeEditCommentModal();
+        } catch (error) {
+            console.error("Erro ao editar o comentário:", error);
+            toast.error("Erro ao editar o comentário.");
+        }
+    };
 
-    if (!post) {
-        return <div>Carregando...</div>;
-    }
+    const handleDeleteComment = async (commentId: string) => {
+        try {
+            await axios.delete(`http://localhost:8000/comment/delete/${commentId}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+            toast.success("Comentário deletado com sucesso.");
+            getPost();
+        } catch (error) {
+            console.error("Erro ao deletar o comentário:", error);
+            toast.error("Erro ao deletar o comentário.");
+        }
+    };
 
     return (
         <>
             <ToastContainer />
             <PageEnveloper>
-                <QuestionCard isDetails={true} onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} userId={post.userId.name}
-                    createdAt={post.createdAt} comments={post.comments.map(comment => ({
+                <QuestionCard isDetails={true} onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
                         description: comment.description,
-                        userName: comment.userId?.name || 'Anônimo'
-                    }))}>
-                    {(post.description)}
+                        userName: comment.userId?.name || 'Anônimo',
+                        _id: comment._id
+                    }))} >
+                    {post.description}
                 </QuestionCard>
             </PageEnveloper>
             <ModalNewPost onSubmit={handleSubmitEditPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isOpen={isModalOpen} onClose={closeModal} />
+            <ModalEditComment onSubmit={handleSubmitEditComment} description={commentDescriptionToEdit} setDescription={setCommentDescriptionToEdit} isOpen={isModalCommentOpen} onClose={closeEditCommentModal} />
         </>
-    )
-}
+    );
+};
 
 export default PostDetailPage;

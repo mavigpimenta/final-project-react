@@ -8,11 +8,14 @@ import CommentInput from "../CommentInput";
 interface CommentProps {
     description: string;
     userName: string;
+    _id: string;
 }
 
-const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, userId, createdAt  }: { isDetails: boolean, title: string, children: string, comments: CommentProps[], id: string, onDelete?: () => void, onEdit?: () => void, handleSubmitNewComment?: () => void, setDescriptionComment?: (value: string) => void, descriptionComment?: string, userId: string, createdAt: string}) => {
+const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, createdAt, openEditCommentModal, handleDeleteComment, }: {
+    isDetails: boolean; title: string; children: string; comments: CommentProps[]; id: string; onDelete?: () => void; onEdit?: () => void; handleSubmitNewComment?: () => void; setDescriptionComment?: (value: string) => void; descriptionComment?: string; createdAt: string; openEditCommentModal?: (commentId: string, currentDescription: string) => void; handleDeleteComment?: (commentId: string) => void;
+}) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
-    const { selectedLanguage, setLanguage } = useLanguage();
+    const { selectedLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
     const [userInitial, setUserInitial] = useState("U");
     const [userName, setUserName] = useState("Usuário");
@@ -62,9 +65,7 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
     };
 
     const truncateDescription = (description: string) => {
-        return description.length > 64
-            ? description.slice(0, 64) + "..."
-            : description;
+        return description.length > 64 ? description.slice(0, 64) + "..." : description;
     };
 
     const getRandomColor = () => {
@@ -111,15 +112,17 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
             <Line />
             {comments && comments.length > 0 ? (
                 comments.map((comment, index) => (
-                    <CommentWrapper>
-                        <Comment key={index}>
-                            <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>{comment.userName.charAt(0).toUpperCase()}</UserIcon>
+                    <CommentWrapper key={index}>
+                        <Comment>
+                            <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>
+                                {comment.userName.charAt(0).toUpperCase()}
+                            </UserIcon>
                             {truncateDescription(comment.description)}
                         </Comment>
                         {isDetails && (
                             <Header>
-                                <StyledIconComment src={Delete} onClick={onDelete} />
-                                <StyledIconComment src={Edit} onClick={onEdit} />
+                                <StyledIconComment src={Delete} onClick={() => handleDeleteComment(comment._id)} />
+                                <StyledIconComment src={Edit} onClick={() => openEditCommentModal(comment._id, comment.description)} />
                             </Header>
                         )}
                     </CommentWrapper>
@@ -130,6 +133,7 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
                     {selectedLanguage === 'pt-BR' ? 'Não há comentários ainda.' : selectedLanguage === 'en-US' ? 'No comments yet.' : 'Es liegen noch keine Kommentare vor.'}
                 </Comment>
             )}
+
             {isDetails ? (
                 <InputContainer>
                     <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
@@ -138,12 +142,12 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
             ) : (
                 <SeeMorePosition>
                     <SeeMoreButton href={`/detail/${id}`}>
-                        {selectedLanguage === 'pt-BR' ? 'Ver mais' : selectedLanguage === 'pt-BR' ? 'See more' : 'Mehr sehen'}
+                        {selectedLanguage === 'pt-BR' ? 'Ver mais' : selectedLanguage === 'en-US' ? 'See more' : 'Mehr sehen'}
                     </SeeMoreButton>
                 </SeeMorePosition>
             )}
         </CardWrapper>
-    )
-}
+    );
+};
 
 export default QuestionCard;
