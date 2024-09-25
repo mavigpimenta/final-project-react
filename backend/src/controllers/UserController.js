@@ -117,18 +117,19 @@ class UserController {
         const { name, page = 1 } = req.query;
         const limit = 10; 
         const skip = (page - 1) * limit; 
-
+    
         try {
-            let query = {};
+            let query = { removedAt: null }; 
+    
             if (name) {
-                query = { name: { $regex: name, $options: 'i' } };
+                query.name = { $regex: name, $options: 'i' }; 
             }
-
+    
             const users = await User.find(query).skip(skip).limit(limit);
             const totalUsers = await User.countDocuments(query); 
-
+    
             const totalPages = Math.ceil(totalUsers / limit); 
-
+    
             return res.status(200).json({
                 users,
                 totalPages,
@@ -137,6 +138,26 @@ class UserController {
             });
         } catch (error) {
             return res.status(500).send({ message: "Something went wrong.", data: error.message });
+        }
+    }
+    
+
+    static async delete(req, res) {
+        const { id } = req.params;
+
+        try {
+            const user = await User.findById(id);
+            if (!user) return res.status(404).send({ message: "user not found" });
+
+            if (req.user.role !== 'ADMIN') 
+                return res.status(403).send({ message: "Forbbiden" });
+            
+            user.removedAt = Date.now();
+            await user.save();
+
+            return res.status(200).send({ message: "Deleted post with sucessfully" });
+        } catch (error) {
+            return res.status(500).send({ error: "Something wrong", data: error.message });
         }
     }
 }

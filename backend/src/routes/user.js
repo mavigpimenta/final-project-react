@@ -8,5 +8,6 @@ route
     .post('/login', UserController.login)
     .put('/update', authMiddleware, UserController.updatePassword)
     .get('/getUsers', authMiddleware, UserController.searchUsers)
+    .delete('/delete/:id', authMiddleware, UserController.delete)
 
 module.exports = route;

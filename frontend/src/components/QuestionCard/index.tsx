@@ -111,11 +111,11 @@ const QuestionCard = ({
     };
 
     const canEditOrDeleteComment = (commentUserId: string) => {
-        return tokenData?.role === "admin" || tokenData?.id === commentUserId;
+        return tokenData?.role === "ADMIN" || tokenData?.id === commentUserId;
     };
 
     const canEditOrDeletePost = (postUserId: string) => {
-        return tokenData?.role === "admin" || tokenData?.id === postUserId;
+        return tokenData?.role === "ADMIN" || tokenData?.id === postUserId;
     };
 
     return (
