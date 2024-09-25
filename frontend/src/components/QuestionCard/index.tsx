@@ -57,7 +57,7 @@ const QuestionCard = ({
 
     useEffect(() => {
         const storedUserName = localStorage.getItem('name') || "Usuário";
-        const storedBgColor = localStorage.getItem(`${storedUserName}-color`);
+        const storedBgColor = localStorage.getItem(`${storedUserName}`);
 
         setUserName(formatUserName(storedUserName));
         setUserInitial(storedUserName.charAt(0).toUpperCase());
@@ -66,7 +66,7 @@ const QuestionCard = ({
             setBgColor(storedBgColor);
         } else {
             const newColor = getRandomColor();
-            localStorage.setItem(`${storedUserName}-color`, newColor);
+            localStorage.setItem(`${storedUserName}`, newColor);
             setBgColor(newColor);
         }
     }, []);

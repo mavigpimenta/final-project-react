@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import PageEnveloper from "../../components/PageEnveloper";
 import QuestionCard from "../../components/QuestionCard";
-import { AddButton, PageWrapper } from "./styled.module";
+import { AddButton, PageWrapper, PostCreator, PostCreatorIcon } from "./styled.module";
 import { ModalNewPost } from "../../components/ModalNewPost";
 import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
@@ -13,6 +13,7 @@ interface Post {
     title: string;
     description: string;
     comments: { description: string, userId: { name: string } }[];
+    userId: { name: string, _id: string }
 }
 
 const MainPage: React.FC = () => {
@@ -23,9 +24,38 @@ const MainPage: React.FC = () => {
     const [description, setDescription] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    useEffect(() => {
+        posts.forEach((post) => {
+            const storedColor = localStorage.getItem(post.comments[0]?.userId?.name);
+            if (!storedColor) {
+                const newColor = generateColorForUser(post.comments[0]?.userId?.name);
+                localStorage.setItem(post.comments[0]?.userId?.name, newColor);
+                setUserColors((prevColors) => ({
+                    ...prevColors,
+                    [post.comments[0]?.userId?.name]: newColor
+                }));
+            } else {
+                setUserColors((prevColors) => ({
+                    ...prevColors,
+                    [post.comments[0]?.userId?.name]: storedColor
+                }));
+            }
+        });
+    }, [posts]);
+
+    const generateColorForUser = (userName: string) => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
 
     const getAllPosts = async (searchTitle: string = '') => {
         try {
@@ -38,7 +68,7 @@ const MainPage: React.FC = () => {
             toast.error('Erro ao carregar...');
         }
     };
-    
+
     useEffect(() => {
         getAllPosts(titleSearch);
     }, [currentPage, titleSearch]);
@@ -87,12 +117,15 @@ const MainPage: React.FC = () => {
                 <Search title={titleSearch} setTitle={setTitleSearch} />
                 {posts && posts.map((post) => (
                     post && post.title ? (
-                        <QuestionCard isDetails={false} id={post._id} key={post._id} title={post.title} comments={post.comments.map(comment => ({
-                            description: comment.description,
-                            userName: comment.userId?.name || 'Anônimo'
-                        }))}>
-                            {truncateDescription(post.description)}
-                        </QuestionCard>
+                        <PostCreator key={post._id}>
+                            <PostCreatorIcon bgColor={userColors[post.comments[0]?.userId?.name] || "#ccc"}>{post.userId?.name.charAt(0).toUpperCase()}</PostCreatorIcon>
+                            <QuestionCard isDetails={false} id={post._id} title={post.title} comments={post.comments.map(comment => ({
+                                description: comment.description,
+                                userName: comment.userId?.name || 'Anônimo'
+                            }))}>
+                                {truncateDescription(post.description)}
+                            </QuestionCard>
+                        </PostCreator>
                     ) : null
                 ))}
                 <AddButton onClick={openModal} />
