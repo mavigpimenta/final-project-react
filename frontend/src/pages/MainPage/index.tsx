@@ -112,7 +112,7 @@ const MainPage: React.FC = () => {
     };
 
     return (
-        <PageEnveloper>2
+        <PageEnveloper>
             <PageWrapper>
                 <Search title={titleSearch} setTitle={setTitleSearch} />
                 {posts && posts.map((post) => (
