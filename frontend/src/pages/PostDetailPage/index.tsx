@@ -6,13 +6,14 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { ModalNewPost } from "../../components/ModalNewPost";
 import { ModalEditComment } from "../../components/ModalEditComment";
+import { PageWrapper } from "./styled.module";
 
 interface Post {
     _id: string;
     title: string;
     description: string;
     comments: { description: string, userId: { name: string, _id: string }, _id: string }[];
-    userId: {name: string; _id: string};
+    userId: { name: string; _id: string };
     createdAt: string;
 }
 
@@ -93,7 +94,7 @@ const PostDetailPage = () => {
             });
             toast.success("Post editado com sucesso!");
             getPost();
-            closeModal(); 
+            closeModal();
         } catch (error) {
             console.error("Erro ao atualizar o post:", error);
             toast.error('Erro ao atualizar o post.');
@@ -161,14 +162,16 @@ const PostDetailPage = () => {
         <>
             <ToastContainer />
             <PageEnveloper>
-                <QuestionCard userId={post.userId?._id} isDetails={true} onEdit={openModal} id={post._id} key={post._id} userIdPost={post.userId.name} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
+                <PageWrapper>
+                    <QuestionCard userId={post.userId?._id} isDetails={true} onEdit={openModal} id={post._id} key={post._id} userIdPost={post.userId.name} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
                         description: comment.description,
                         userName: comment.userId?.name || 'Anônimo',
                         userId: comment.userId?._id,
                         _id: comment._id
                     }))} >
-                    {post.description}
-                </QuestionCard>
+                        {post.description}
+                    </QuestionCard>
+                </PageWrapper>
             </PageEnveloper>
             <ModalNewPost onSubmit={handleSubmitEditPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isOpen={isModalOpen} onClose={closeModal} />
             <ModalEditComment onSubmit={handleSubmitEditComment} description={commentDescriptionToEdit} setDescription={setCommentDescriptionToEdit} isOpen={isModalCommentOpen} onClose={closeEditCommentModal} />
