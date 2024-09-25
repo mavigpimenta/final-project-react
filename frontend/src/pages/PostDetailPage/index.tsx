@@ -161,7 +161,7 @@ const PostDetailPage = () => {
         <>
             <ToastContainer />
             <PageEnveloper>
-                <QuestionCard userId={post.userId?._id} isDetails={true} onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
+                <QuestionCard userId={post.userId?._id} isDetails={true} onEdit={openModal} id={post._id} key={post._id} userIdPost={post.userId.name} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
                         description: comment.description,
                         userName: comment.userId?.name || 'Anônimo',
                         userId: comment.userId?._id,
