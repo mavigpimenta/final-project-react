@@ -37,7 +37,7 @@ class CommentController {
     }
 
     static async edit(req, res) {
-        const { commentId } = req.query; 
+        const { id } = req.params; 
         const { description } = req.body;
 
         if (!description) {
@@ -45,7 +45,7 @@ class CommentController {
         }
 
         try {
-            const comment = await Comment.findById(commentId);
+            const comment = await Comment.findById(id);
             if (!comment) 
                 return res.status(404).send({ message: "Comment not found." });
 
@@ -63,10 +63,10 @@ class CommentController {
     }
 
     static async delete(req, res) {
-        const { commentId } = req.params;
+        const { id } = req.params;
 
         try {
-            const comment = await Comment.findById(commentId);
+            const comment = await Comment.findById(id);
             if (!comment) return res.status(404).send({ message: "Comment not found." });
 
             if (req.user.role !== 'ADMIN') {

@@ -5,7 +5,7 @@ const authMiddleware = require('../controllers/AuthController');
 
 route
     .post('/create', authMiddleware, CommentController.create)
-    .patch('/edit', authMiddleware, CommentController.edit)
-    .delete('/delete', authMiddleware, CommentController.delete)
+    .patch('/edit/:id', authMiddleware, CommentController.edit)
+    .delete('/delete/:id', authMiddleware, CommentController.delete)
 
 module.exports = route;
