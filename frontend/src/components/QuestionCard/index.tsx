@@ -7,10 +7,10 @@ import CommentInput from "../CommentInput";
 import { jwtDecode } from "jwt-decode";
 
 interface CommentProps {
-    description: string;
-    userName: string;
-    userId: string;
-    _id: string;
+    description?: string;
+    userName?: string;
+    userId?: string;
+    _id?: string;
 }
 
 interface TokenData {
