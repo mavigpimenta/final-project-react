@@ -11,8 +11,8 @@ interface Post {
     _id: string;
     title: string;
     description: string;
-    comments: { description: string, userId: { name: string }, _id: string }[];
-    userId: string;
+    comments: { description: string, userId: { name: string, _id: string }, _id: string }[];
+    userId: {name: string; _id: string};
     createdAt: string;
 }
 
@@ -161,9 +161,10 @@ const PostDetailPage = () => {
         <>
             <ToastContainer />
             <PageEnveloper>
-                <QuestionCard isDetails={true} onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
+                <QuestionCard userId={post.userId?._id} isDetails={true} onEdit={openModal} id={post._id} key={post._id} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
                         description: comment.description,
                         userName: comment.userId?.name || 'Anônimo',
+                        userId: comment.userId?._id,
                         _id: comment._id
                     }))} >
                     {post.description}

@@ -4,21 +4,37 @@ import { useLanguage } from "../../context/LanguageContext";
 import Delete from "/Delete.svg";
 import Edit from "/Edit.svg";
 import CommentInput from "../CommentInput";
+import { jwtDecode } from "jwt-decode";
 
 interface CommentProps {
     description: string;
     userName: string;
+    userId: string;
     _id: string;
 }
 
-const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, createdAt, openEditCommentModal, handleDeleteComment, }: {
-    isDetails: boolean; title: string; children: string; comments: CommentProps[]; id: string; onDelete?: () => void; onEdit?: () => void; handleSubmitNewComment?: () => void; setDescriptionComment?: (value: string) => void; descriptionComment?: string; createdAt: string; openEditCommentModal?: (commentId: string, currentDescription: string) => void; handleDeleteComment?: (commentId: string) => void;
-}) => {
+interface TokenData {
+    id: string;
+    role: string;
+}
+
+const QuestionCard = ({
+    title, children, comments, id, userId, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, createdAt, openEditCommentModal, handleDeleteComment, }: { isDetails: boolean; title: string; children: string; comments: CommentProps[]; id: string; onDelete?: () => void; onEdit?: () => void; handleSubmitNewComment?: () => void; setDescriptionComment?: (value: string) => void; userId: string; descriptionComment?: string; createdAt: string; openEditCommentModal?: (commentId: string, currentDescription: string) => void; handleDeleteComment?: (commentId: string) => void; }) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
     const [userInitial, setUserInitial] = useState("U");
     const [userName, setUserName] = useState("Usuário");
+
+    const [tokenData, setTokenData] = useState<TokenData | null>(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = jwtDecode<TokenData>(token);
+            setTokenData(decodedToken);
+        }
+    }, []);
 
     useEffect(() => {
         comments.forEach((comment) => {
@@ -94,9 +110,17 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
         });
     };
 
+    const canEditOrDeleteComment = (commentUserId: string) => {
+        return tokenData?.role === "admin" || tokenData?.id === commentUserId;
+    };
+
+    const canEditOrDeletePost = (postUserId: string) => {
+        return tokenData?.role === "admin" || tokenData?.id === postUserId;
+    };
+
     return (
         <CardWrapper>
-            {isDetails && (
+            {isDetails && canEditOrDeletePost(userId) && (
                 <Header>
                     <StyledIcon src={Delete} onClick={onDelete} />
                     <StyledIcon src={Edit} onClick={onEdit} />
@@ -106,7 +130,9 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
             <Description>{children}</Description>
             {isDetails && (
                 <CreationDetail>
-                    {selectedLanguage === 'pt-BR' ? 'Criado por' : selectedLanguage === 'en-US' ? 'Created by' : 'Erstellt von'} <UserDetail bgColor={bgColor}>{userInitial}</UserDetail> {formatUserName(userName)} {selectedLanguage === 'pt-BR' ? 'em' : selectedLanguage === 'en-US' ? 'at' : 'am'} {formatDate(createdAt)}
+                    {selectedLanguage === 'pt-BR' ? 'Criado por' : selectedLanguage === 'en-US' ? 'Created by' : 'Erstellt von'} 
+                    <UserDetail bgColor={bgColor}>{userInitial}</UserDetail> {formatUserName(userName)} 
+                    {selectedLanguage === 'pt-BR' ? 'em' : selectedLanguage === 'en-US' ? 'at' : 'am'} {formatDate(createdAt)}
                 </CreationDetail>
             )}
             <Line />
@@ -119,7 +145,7 @@ const QuestionCard = ({ title, children, comments, id, onDelete, onEdit, handleS
                             </UserIcon>
                             {truncateDescription(comment.description)}
                         </Comment>
-                        {isDetails && (
+                        {isDetails && canEditOrDeleteComment(comment.userId) && (
                             <Header>
                                 <StyledIconComment src={Delete} onClick={() => handleDeleteComment(comment._id)} />
                                 <StyledIconComment src={Edit} onClick={() => openEditCommentModal(comment._id, comment.description)} />

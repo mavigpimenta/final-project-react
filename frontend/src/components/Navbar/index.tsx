@@ -89,12 +89,13 @@ const Navbar = () => {
 
     const formatUserName = (name: string) => {
         const namesArray = name.split(" ");
-        const capitalizedNames = namesArray.map(part => {
-            return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
-        });
-        return capitalizedNames.join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (namesArray.length > 1) {
+            const firstName = namesArray[0];
+            const lastName = namesArray[namesArray.length - 1];
+            return `${firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase()} ${lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase()}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     };
-
     return (
         <NavbarContainer>
             <NavbarContent>
