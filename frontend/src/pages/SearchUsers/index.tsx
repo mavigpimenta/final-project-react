@@ -145,7 +145,7 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
                         <Header>
                             <UserIcon bgColor={userColors[user.name] || "#ccc"}>{user.name.charAt(0).toUpperCase()}</UserIcon>
                             <IconWrapper>
-                                <StyledIcon src={Delete} onClick={onDelete} />
+                                <StyledIcon src={Delete} onClick={() => handleDelete(user._id)} />
                             </IconWrapper>
                         </Header>
                         <Title>{user.name}</Title>

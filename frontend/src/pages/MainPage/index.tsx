@@ -13,7 +13,7 @@ interface Post {
     title: string;
     description: string;
     comments: { description: string, userId: { name: string } }[];
-    userId: { name: string, _id: string };
+    userId: { name: string, _id: string }
 }
 
 const MainPage: React.FC = () => {
@@ -118,7 +118,7 @@ const MainPage: React.FC = () => {
                 {posts && posts.map((post) => (
                     post && post.title ? (
                         <PostCreator key={post._id}>
-                            <PostCreatorIcon bgColor={userColors[post.userId?.name] || "#ccc"}>{post.userId?.name.charAt(0).toUpperCase()}</PostCreatorIcon>
+                            <PostCreatorIcon bgColor={userColors[post.comments[0]?.userId?.name] || "#ccc"}>{post.userId?.name.charAt(0).toUpperCase()}</PostCreatorIcon>
                             <QuestionCard isDetails={false} id={post._id} title={post.title} comments={post.comments.map(comment => ({
                                 description: comment.description,
                                 userName: comment.userId?.name || 'Anônimo'
