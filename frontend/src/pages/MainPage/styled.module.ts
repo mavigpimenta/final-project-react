@@ -36,6 +36,7 @@ export const AddButton = styled.button`
 `;
 
 export const PostCreator = styled.div`
+  width: 80%;
   position: relative;
   margin-bottom: 20px;
 `;
@@ -45,7 +46,7 @@ export const PostCreatorIcon = styled.div<UserIconProps>`
   height: 35px;
   position: absolute;
   top: 10px;
-  left: -20px;
+  left: 380px;
   border-radius: 50%;
   background-color: ${(props) => props.bgColor || "#ccc"};
   display: flex;
