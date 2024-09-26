@@ -48,29 +48,32 @@ class UserController {
     static async login(req, res) {
         const { edv, password } = req.body;
         const user = await User.findOne({ edv });
-
-        if(!user)
-            return res.status(400).send({ message: "Invalid Email or password." });
-        
-        if(!bcrypt.compare(password, user.password)) {
-            return res.status(400).send({ message: "Invalid Email or password." });
+    
+        if (!user) {
+            return res.status(400).send({ message: "Invalid EDV or password." });
         }
-
+    
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).send({ message: "Invalid EDV or password." });
+        }
+    
         const secret = process.env.SECRET;
         const token = jwt.sign(
             {
                 id: user._id,
                 role: user.role,
-                name: user.name
+                name: user.name,
             },
             secret,
             {
-                expiresIn: '2d'
+                expiresIn: '2d',
             }
         );
-
-        return res.status(200).send({token: token});
+    
+        return res.status(200).send({ token });
     }
+    
 
     static async updatePassword(req, res) {
         const { oldPassword, newPassword, confirmPassword } = req.body;

@@ -3,6 +3,7 @@ import { LoginForm } from "../../components/LoginForm";
 import { ContentWrapper, Logo, PageWrapper } from "./styled.module";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const LoginPage = () => {
   const [edv, setEdv] = useState('');
@@ -26,9 +27,15 @@ export const LoginPage = () => {
       localStorage.setItem('role', decodedToken.role);
       localStorage.setItem('name', decodedToken.name);
 
+      console.log(response)
       navigate('/home')
     } catch (error) {
       console.log('An unexpected error occurred. Please try again later.');
+      console.log(error);
+
+      if (error.response && error.response.status === 400) {
+        toast.error('EDV ou senha inválidos');
+      }
     }
   };
 
