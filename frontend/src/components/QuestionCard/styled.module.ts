@@ -46,7 +46,6 @@ export const StyledIconComment = styled.img`
 `;
 
 export const Description = styled.p`
-    text-align: justify;
     font-size: 1rem;
 `;
 
@@ -58,7 +57,6 @@ export const CommentWrapper = styled.div`
 export const Comment = styled.p`
     display: flex;
     align-items: center;
-    text-align: justify;
     gap: 10px;
     font-size: 0.9rem; 
     overflow-wrap: break-word; 
