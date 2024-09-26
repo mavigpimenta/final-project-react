@@ -143,7 +143,7 @@ const QuestionCard = ({
                             <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>
                                 {comment.userName.charAt(0).toUpperCase()}
                             </UserIcon>
-                            {truncateDescription(comment.description)}
+                            {!isDetails ? truncateDescription(comment.description) : comment.description}
                         </Comment>
                         {isDetails && canEditOrDeleteComment(comment.userId) && (
                             <Header>
