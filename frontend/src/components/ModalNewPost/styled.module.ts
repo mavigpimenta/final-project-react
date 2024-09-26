@@ -14,7 +14,7 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background: white;
+  background: var(--bg-color);
   padding: 20px;
   border-radius: 4px;
   width: 400px;
@@ -33,6 +33,7 @@ export const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   font-size: 20px;
+  color: var(--text-color);
 `;
 
 export const PostForm = styled.form`

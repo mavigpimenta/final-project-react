@@ -7,9 +7,13 @@ export const SearchContainer = styled.div`
     gap: 10px;
     display: flex;
     align-items: center;
-    border: 1px solid;
-    border-radius: 10px;
-`
+    border: none;
+    border-bottom: 1px solid #ccc;
+
+    &:focus {
+        border-bottom-color: #007bc0; 
+    }
+`;
 
 export const StyledSearch = styled.input`
     width: 100%;
@@ -19,10 +23,10 @@ export const StyledSearch = styled.input`
     outline: none;
     background-color: transparent;
     color: var(--bg-text);
-`
+`;
 
 export const SearchImage = styled.div`
     width: 30px;
     height: 30px;
     display: flex;
-`
+`;
