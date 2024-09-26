@@ -5,10 +5,11 @@ import PageEnveloper from "../../components/PageEnveloper";
 import { CardWrapper, Title, Description, UserIcon } from "../../components/QuestionCard/styled.module";
 import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
-import { Header, IconWrapper, PageWrapper, StyledIcon } from "./styled.module";
+import { AddButton, Header, IconWrapper, PageWrapper, StyledIcon } from "./styled.module";
 import { useLanguage } from "../../context/LanguageContext";
 import Delete from "/Delete.svg";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 interface User {
     _id: string;
@@ -32,6 +33,7 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
     const { selectedLanguage, setLanguage } = useLanguage();
     const role = localStorage.getItem("role");
     const [tokenData, setTokenData] = useState<TokenData | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -135,6 +137,9 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
         }
     };
 
+    const handleRegisterClick = () => {
+        navigate("/register");
+    };
 
     return (
         <PageEnveloper>
@@ -144,17 +149,22 @@ export const SearchUsers: React.FC = ({ onDelete, onEdit }: { onDelete?: () => v
                     <CardWrapper key={user._id}>
                         <Header>
                             <UserIcon bgColor={userColors[user.name] || "#ccc"}>{user.name.charAt(0).toUpperCase()}</UserIcon>
-                            <IconWrapper>
-                                <StyledIcon src={Delete} onClick={() => handleDelete(user._id)} />
-                            </IconWrapper>
+                            { role == "ADMIN" &&
+                                <IconWrapper>
+                                    <StyledIcon src={Delete} onClick={() => handleDelete(user._id)} />
+                                </IconWrapper>
+                            }
                         </Header>
                         <Title>{user.name}</Title>
                         <Description><b>EDV:</b> {user.edv}</Description>
                         <Description><b>{selectedLanguage === 'pt-BR' ? 'Data de Nascimento: ' : selectedLanguage === 'en-US' ? 'Birth Date: ' : 'Geburtsdatum: '}</b>{formatDate(user.birthDate)}</Description>
-                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Cargo: ' : selectedLanguage == 'en-US' ? 'Role: ' : 'Position: '}</b>{getRoleLabel(role, selectedLanguage)}</Description>
+                        <Description><b>{selectedLanguage === 'pt-BR' ? 'Cargo: ' : selectedLanguage == 'en-US' ? 'Role: ' : 'Position: '}</b>{getRoleLabel(user.role, selectedLanguage)}</Description>
                     </CardWrapper>
                 ))}
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                { role == 'ADMIN' &&
+                    <AddButton onClick={handleRegisterClick} />
+                }
             </PageWrapper>
         </PageEnveloper>
     );
