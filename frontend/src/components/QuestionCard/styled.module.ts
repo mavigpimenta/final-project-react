@@ -69,6 +69,17 @@ export const Comment = styled.p`
     line-height: 1.2;
 `;
 
+export const Comentary = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+`;
+
+export const ComentaryCreator = styled.p`
+    font-size: smaller;
+    font-weight: 600;
+`;
+
 export const Line = styled.hr`
     border: 1px solid #ccc;
     border-radius: 15px;
