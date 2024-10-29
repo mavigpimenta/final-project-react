@@ -118,10 +118,20 @@ const MainPage: React.FC = () => {
                     post && post.title ? (
                         <PostCreator key={post._id}>
                             <PostCreatorIcon bgColor={localStorage.getItem(post.userId.name) || "#ccc"}>{post.userId?.name.charAt(0).toUpperCase()}</PostCreatorIcon>
-                            <QuestionCard isDetails={false} id={post._id} title={post.title} comments={post.comments.map(comment => ({
-                                description: comment.description,
-                                userName: comment.userId?.name || 'Anônimo'
-                            }))}>
+                            <QuestionCard
+                                isDetails={false}
+                                id={post._id}
+                                title={post.title}
+                                comments={post.comments.map(comment => ({
+                                    description: comment.description,
+                                    userName: comment.userId?.name || 'Anônimo'
+                                }))}
+                                handleSubmitNewComment={() => {}}
+                                setDescriptionComment={() => {}}
+                                userId={post.userId?._id || ''}
+                                createdAt={''}
+                                userIdPost={post.userId?._id || ''}
+                            >
                                 {truncateDescription(post.description)}
                             </QuestionCard>
                         </PostCreator>
