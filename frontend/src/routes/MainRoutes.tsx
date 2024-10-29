@@ -6,6 +6,8 @@ import MainPage from "../pages/MainPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import 'react-toastify/dist/ReactToastify.css';
 import { SearchUsers } from "../pages/SearchUsers";
+import ProtectedRoute from "./ProtectedRoute";
+import ErrorPage from "../pages/ErrorPage";
 
 export const routes = createBrowserRouter([
   {
@@ -17,19 +19,39 @@ export const routes = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: "/updatePass",
-    element: <EditProfilePage />,
+    path: "/updatePass",  
+    element: (
+      <ProtectedRoute
+        errorPage={<ErrorPage />}
+        targetPage={<EditProfilePage />}
+      />
+    ),
   },
   {
     path: "/home",
-    element: <MainPage />,
+    element: (
+      <ProtectedRoute
+        errorPage={<ErrorPage />}
+        targetPage={<MainPage />}
+      />
+    ),
   },
   {
     path: "/users",
-    element: <SearchUsers />
+    element: (
+      <ProtectedRoute
+        errorPage={<ErrorPage />}
+        targetPage={<SearchUsers />}
+      />
+    ),
   },
   { 
     path: "/detail/:id",
-    element: <PostDetailPage />,
+    element: (
+      <ProtectedRoute
+        errorPage={<ErrorPage />}
+        targetPage={<PostDetailPage />}
+      />
+    ),
   }
 ]);
