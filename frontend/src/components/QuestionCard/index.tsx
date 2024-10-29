@@ -19,13 +19,29 @@ interface TokenData {
 }
 
 const QuestionCard = ({
-    title, children, comments, id, userId, userIdPost, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, createdAt, openEditCommentModal, handleDeleteComment, }: { isDetails: boolean; title: string; children: string; comments: CommentProps[]; id: string; onDelete?: () => void; onEdit?: () => void; handleSubmitNewComment?: () => void; setDescriptionComment?: (value: string) => void; userId: string; descriptionComment?: string; createdAt: string; userIdPost: string; openEditCommentModal?: (commentId: string, currentDescription: string) => void; handleDeleteComment?: (commentId: string) => void; }) => {
+    title, children, comments, id, userId, userIdPost, onDelete, onEdit, handleSubmitNewComment, descriptionComment, setDescriptionComment, isDetails, createdAt, openEditCommentModal, handleDeleteComment,
+}: {
+    isDetails: boolean;
+    title: string;
+    children: string;
+    comments: CommentProps[];
+    id: string;
+    onDelete?: () => void;
+    onEdit?: () => void;
+    handleSubmitNewComment: () => void;
+    setDescriptionComment: (value: string) => void;
+    userId: string;
+    descriptionComment?: string;
+    createdAt: string;
+    userIdPost: string;
+    openEditCommentModal?: (commentId: string, currentDescription: string) => void;
+    handleDeleteComment?: (commentId: string) => void;
+}) => {
     const [userColors, setUserColors] = useState<{ [key: string]: string }>({});
     const { selectedLanguage } = useLanguage();
     const [bgColor, setBgColor] = useState("#ccc");
     const [userInitial, setUserInitial] = useState("U");
     const [userName, setUserName] = useState("Usuário");
-
     const [tokenData, setTokenData] = useState<TokenData | null>(null);
 
     useEffect(() => {
@@ -38,37 +54,32 @@ const QuestionCard = ({
 
     useEffect(() => {
         comments.forEach((comment) => {
-            const storedColor = localStorage.getItem(comment.userName);
-            if (!storedColor) {
-                const newColor = generateColorForUser(comment.userName);
-                localStorage.setItem(comment.userName, newColor);
-                setUserColors((prevColors) => ({
-                    ...prevColors,
-                    [comment.userName]: newColor
-                }));
-            } else {
-                setUserColors((prevColors) => ({
-                    ...prevColors,
-                    [comment.userName]: storedColor
-                }));
+            if (comment.userName) { // Verificação adicional para garantir que userName não seja undefined
+                const storedColor = localStorage.getItem(comment.userName);
+                if (!storedColor) {
+                    const newColor = generateColorForUser(comment.userName);
+                    localStorage.setItem(comment.userName, newColor);
+                    setUserColors((prevColors) => ({
+                        ...prevColors,
+                        [comment.userName as string]: newColor
+                    }));
+                } else {
+                    setUserColors((prevColors) => ({
+                        ...prevColors,
+                        [comment.userName as string]: storedColor || "#ccc"
+                    }));
+                }
             }
         });
     }, [comments]);
 
     useEffect(() => {
         const storedUserName = localStorage.getItem('name') || "Usuário";
-        const storedBgColor = localStorage.getItem(`${storedUserName}`);
+        const storedBgColor = localStorage.getItem(storedUserName) || "#ccc";
 
         setUserName(formatUserName(storedUserName));
         setUserInitial(storedUserName.charAt(0).toUpperCase());
-
-        if (storedBgColor) {
-            setBgColor(storedBgColor);
-        } else {
-            const newColor = getRandomColor();
-            localStorage.setItem(`${storedUserName}`, newColor);
-            setBgColor(newColor);
-        }
+        setBgColor(storedBgColor || getRandomColor());
     }, []);
 
     const generateColorForUser = (userName: string) => {
@@ -110,7 +121,7 @@ const QuestionCard = ({
         });
     };
 
-    const canEditOrDeleteComment = (commentUserId: string) => {
+    const canEditOrDeleteComment = (commentUserId: string | undefined) => {
         return tokenData?.role === "ADMIN" || tokenData?.id === commentUserId;
     };
 
@@ -140,22 +151,22 @@ const QuestionCard = ({
                 comments.map((comment, index) => (
                     <CommentWrapper key={index}>
                         <Comment>
-                            <UserIcon bgColor={userColors[comment.userName] || "#ccc"}>
-                                {comment.userName.charAt(0).toUpperCase()}
+                            <UserIcon bgColor={userColors[comment.userName || ""] || "#ccc"}>
+                                {comment.userName?.charAt(0).toUpperCase() || "U"}
                             </UserIcon>
                             <Comentary>
                                 {isDetails && (
                                     <ComentaryCreator>
-                                        {formatUserName(comment.userName)}
+                                        {formatUserName(comment.userName || "Usuário")}
                                     </ComentaryCreator>
                                 )}
-                                {!isDetails ? truncateDescription(comment.description) : comment.description}
+                                {!isDetails ? truncateDescription(comment.description || "") : comment.description}
                             </Comentary>
                         </Comment>
                         {isDetails && canEditOrDeleteComment(comment.userId) && (
                             <Header>
-                                <StyledIconComment src={Delete} onClick={() => handleDeleteComment(comment._id)} />
-                                <StyledIconComment src={Edit} onClick={() => openEditCommentModal(comment._id, comment.description)} />
+                                <StyledIconComment src={Delete} onClick={() => handleDeleteComment?.(comment._id || "")} />
+                                <StyledIconComment src={Edit} onClick={() => openEditCommentModal?.(comment._id || "", comment.description || "")} />
                             </Header>
                         )}
                     </CommentWrapper>
@@ -170,7 +181,7 @@ const QuestionCard = ({
             {isDetails ? (
                 <InputContainer>
                     <UserIcon bgColor={bgColor}>{userInitial}</UserIcon>
-                    <CommentInput onSubmit={handleSubmitNewComment} description={descriptionComment} setDescription={setDescriptionComment} />
+                    <CommentInput onSubmit={handleSubmitNewComment} description={descriptionComment || ''} setDescription={setDescriptionComment} />
                 </InputContainer>
             ) : (
                 <SeeMorePosition>
