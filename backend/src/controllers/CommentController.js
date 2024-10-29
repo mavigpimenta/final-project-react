@@ -29,7 +29,7 @@ class CommentController {
             await postComment.save();
             await comment.save();
             
-            return res.status(201).send({ message: "Comment created successfully." });
+            return res.status(200).send({ message: "Comment created successfully." });
         } catch (error) {
             console.error(error);
             return res.status(500).send({ message: "Failed to create comment.", error: error.message });
