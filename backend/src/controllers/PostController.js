@@ -135,7 +135,7 @@ class PostController {
             };
 
             await Post.create(post);
-            return res.status(201).send({ message: "Created post wit sucessfully" });
+            return res.status(200).send({ message: "Created post wit sucessfully" });
         } catch (error) {
             return res.status(500).send({ error: "Something wrong", data: error.message });
         }

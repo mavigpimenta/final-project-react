@@ -54,7 +54,7 @@ export const CommentWrapper = styled.div`
     align-items: flex-start; 
 `;
 
-export const Comment = styled.p`
+export const Comment = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
@@ -126,7 +126,7 @@ export const InputContainer = styled.div`
     gap: 5px;
 `;
 
-export const CreationDetail = styled.p`
+export const CreationDetail = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;

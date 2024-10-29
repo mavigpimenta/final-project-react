@@ -128,7 +128,7 @@ const MainPage: React.FC = () => {
                     ) : null
                 ))}
                 <AddButton onClick={openModal} />
-                <ModalNewPost onSubmit={handleSubmitNewPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isOpen={isModalOpen} onClose={closeModal} />
+                <ModalNewPost onSubmit={handleSubmitNewPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isopen={isModalOpen} onClose={closeModal} />
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
             </PageWrapper>
         </PageEnveloper>

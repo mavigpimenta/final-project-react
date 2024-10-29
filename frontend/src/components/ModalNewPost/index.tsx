@@ -10,12 +10,12 @@ interface ModalFormProps {
     setTitle: (value: string) => void;
     description: string;
     setDescription: (value: string) => void;
-    isOpen: boolean;
+    isopen: boolean;
     onClose: () => void;
   }
 
-export const ModalNewPost: React.FC<ModalFormProps> = ({onSubmit, title, description, setTitle, setDescription, isOpen, onClose }) => {
-    if (!isOpen) return null;
+export const ModalNewPost: React.FC<ModalFormProps> = ({onSubmit, title, description, setTitle, setDescription, isopen, onClose }) => {
+    if (!isopen) return null;
     const { selectedLanguage, setLanguage } = useLanguage();
       
     return (

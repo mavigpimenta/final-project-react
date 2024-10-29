@@ -8,12 +8,12 @@ interface ModalFormProps {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     description: string;
     setDescription: (value: string) => void;
-    isOpen: boolean;
+    isopen: boolean;
     onClose: () => void;
   }
 
-export const ModalEditComment: React.FC<ModalFormProps> = ({onSubmit, description, setDescription, isOpen, onClose }) => {
-    if (!isOpen) return null;
+export const ModalEditComment: React.FC<ModalFormProps> = ({onSubmit, description, setDescription, isopen, onClose }) => {
+    if (!isopen) return null;
     const { selectedLanguage, setLanguage } = useLanguage();
       
     return (
