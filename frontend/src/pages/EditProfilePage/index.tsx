@@ -5,11 +5,13 @@ import PageEnveloper from "../../components/PageEnveloper";
 import WorkerImage from "/FemaleWorker.svg";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const EditProfilePage = () => {
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
@@ -27,6 +29,7 @@ const EditProfilePage = () => {
 
             toast.success('Senha alterada com sucesso')
             console.log(response.data)
+            navigate('/home');
         } catch (err) {
             const error = err as AxiosError
             console.log('Erro do backend:', error.response?.data)

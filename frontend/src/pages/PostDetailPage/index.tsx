@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import PageEnveloper from "../../components/PageEnveloper";
 import QuestionCard from "../../components/QuestionCard";
 import axios from "axios";
@@ -160,7 +160,6 @@ const PostDetailPage = () => {
 
     return (
         <>
-            <ToastContainer />
             <PageEnveloper>
                 <PageWrapper>
                     <QuestionCard userId={post.userId?._id} isDetails={true} onEdit={openModal} id={post._id} key={post._id} userIdPost={post.userId.name} title={post.title} onDelete={deletePost} handleSubmitNewComment={handleSubmitNewComment} setDescriptionComment={setDescriptionComment} descriptionComment={descriptionComment} createdAt={post.createdAt} openEditCommentModal={openEditCommentModal} handleDeleteComment={handleDeleteComment} comments={post.comments.map(comment => ({
@@ -173,8 +172,8 @@ const PostDetailPage = () => {
                     </QuestionCard>
                 </PageWrapper>
             </PageEnveloper>
-            <ModalNewPost onSubmit={handleSubmitEditPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isOpen={isModalOpen} onClose={closeModal} />
-            <ModalEditComment onSubmit={handleSubmitEditComment} description={commentDescriptionToEdit} setDescription={setCommentDescriptionToEdit} isOpen={isModalCommentOpen} onClose={closeEditCommentModal} />
+            <ModalNewPost onSubmit={handleSubmitEditPost} title={title} setTitle={setTitle} description={description} setDescription={setDescription} isopen={isModalOpen} onClose={closeModal} />
+            <ModalEditComment onSubmit={handleSubmitEditComment} description={commentDescriptionToEdit} setDescription={setCommentDescriptionToEdit} isopen={isModalCommentOpen} onClose={closeEditCommentModal} />
         </>
     );
 };

@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { jwtDecode } from 'jwt-decode';
 
 interface IProtectedRoute {
@@ -7,14 +8,14 @@ interface IProtectedRoute {
 }
 
 export default function ProtectedRoute({ errorPage, targetPage }: IProtectedRoute) {
-    const [page, setPage] = useState(<></>);
+    const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
-    function renderPage() {
+    useEffect(() => {
         const token = localStorage.getItem('token');
 
         if (!token) {
             console.log("Token não encontrado.");
-            setPage(errorPage);
+            setIsAuthorized(false);
             return;
         }
 
@@ -27,21 +28,21 @@ export default function ProtectedRoute({ errorPage, targetPage }: IProtectedRout
 
             if (tokenExpirationTime <= Date.now()) {
                 console.log("Token expirado.");
-                setPage(errorPage);
+                setIsAuthorized(false);
                 return;
             }
 
             console.log("Token válido. Carregando página de destino.");
-            setPage(targetPage);
+            setIsAuthorized(true);
         } catch (error) {
             console.log("Erro ao decodificar o token:", error);
-            setPage(errorPage);
+            setIsAuthorized(false);
         }
-    }
-
-    useEffect(() => {
-        renderPage();
     }, []);
 
-    return page;
+    if (isAuthorized === null) {
+        return <></>; 
+    }
+
+    return isAuthorized ? targetPage : <Navigate to="/" state={{ from: window.location.pathname }} />;
 }
